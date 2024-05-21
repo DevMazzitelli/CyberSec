@@ -15,26 +15,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="/assets/js/MENUBURGER.js"></script>
-    <script src="/assets/js/ScrollNAV.js"></script>
-    <script src="../assets/js/AvisClient.js"></script>
-    <script src="/assets/js/CARROUSSEL.js"></script>
+
+    <!-- Gère tout ton CSS avec WebpackEncore -->
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
+    <!-- Gère tout ton JavaScript avec WebpackEncore -->
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
 <body class="fond">
-
 <header>
     <section class="fond fixed top-0 w-screen bg-transparent z-50">
         <div id="myDiv" class="top- mx-auto my-1 mb-2 border-10 border-solid border-blue-100 overflow-hidden shadow-md">
             <!-- le contenu défilant -->
             <div class="w-screen lg:w-full pr-8 pl-full whitespace-nowrap custom-scroll text-white">
-                :) - FAQ | CONTACT + PAGE INSCRIPTION ET CONNEXION TERMINER + PAGE MDP OUBLIER + création controller security + ABOUT.. - :)
+                :) - FAQ CONTACT PAGE MDP OUBLIE- :)
             </div>
         </div>
 
@@ -78,8 +76,12 @@
                 </li>
                 <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
             </ul>
-            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_connexion') }}">Connexion</a>
-            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_inscription') }}">S'inscrire</a>
+            {% if app.user %}
+                <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+                <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_login') }}">Connexion</a>
+            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_register') }}">S'inscrire</a>
+            {% endif %}
         </nav>
 
         <nav id="navDeux" class="hidden relative top-2 px-2 py-2 mx-16 flex justify-between items-center bg-white rounded-full">
@@ -121,8 +123,12 @@
                 </li>
                 <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
             </ul>
-            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_connexion') }}">Connexion</a>
-            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_inscription') }}">S'inscrire</a>
+            {% if app.user %}
+            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">déconnexion</a>
+            {% else %}
+            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_login') }}">Connexion</a>
+            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_register') }}">S'inscrire</a>
+            {% endif %}
         </nav>
 
 
@@ -161,8 +167,12 @@
                 </div>
                 <div class="mt-auto">
                     <div class="pt-6">
-                        <a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl" href="#">Connection</a>
-                        <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl" href="#">S'inscrire</a>
+                        {% if app.user %}
+                        <a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl" href="{{ path('app_logout') }}">déconnection</a>
+                        {% else %}
+                        <a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl" href="{{ path('app_login') }}">Connection</a>
+                        <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl" href="{{ path('app_register') }}">S'inscrire</a>
+                        {% endif %}
                     </div>
                     <p class="my-4 text-xs text-center text-gray-400">
                         <span>© 2024 CyberSec. Tous droits réservés.</span>

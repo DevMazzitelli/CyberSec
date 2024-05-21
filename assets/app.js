@@ -7,4 +7,7 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
-import './js/AvisClient.js';
+
+import './js/avisClient.js';
+import './js/nav.js';
+import './js/caroussel.js';
