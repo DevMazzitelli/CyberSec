@@ -40,7 +40,7 @@
 
 
         <nav id="navUn" class="relative px-4 py-4 flex justify-between items-center bg-fond">
-            <a class="text-3xl font-bold leading-none" href="#">
+            <a class="text-3xl font-bold leading-none" href="{{ path('app_home') }}">
                 <img class="w-14 h-14" src="{{ asset('medias/images/logo_cs-removebg-preview.png') }}" alt="Logo entreprise">
             </a>
             <div class="lg:hidden">
@@ -78,8 +78,12 @@
                 </li>
                 <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
             </ul>
-            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_connexion') }}">Connexion</a>
-            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_inscription') }}">S'inscrire</a>
+            {% if app.user %}
+            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_login') }}">Connexion</a>
+            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_register') }}">S'inscrire</a>
+            {% endif %}
         </nav>
 
         <nav id="navDeux" class="hidden relative top-2 px-2 py-2 mx-16 flex justify-between items-center bg-white rounded-full">
@@ -121,8 +125,12 @@
                 </li>
                 <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
             </ul>
-            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_connexion') }}">Connexion</a>
-            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_inscription') }}">S'inscrire</a>
+            {% if app.user %}
+            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+            <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_login') }}">Connexion</a>
+            <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_register') }}">S'inscrire</a>
+            {% endif %}
         </nav>
 
 
