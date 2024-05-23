@@ -1,0 +1,149 @@
+
+<style>
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+
+    }
+    .invoice-container {
+        border-radius: 30px;
+        background-color: #ffffff;
+        padding: 20px;
+    }
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+    .invoice-header img {
+        max-width: 150px;
+    }
+    .invoice-header h4 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    .invoice-info {
+        margin-top: 20px;
+    }
+    .project-name {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: 20px;
+    }
+    .billing-address h4 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-top: 20px;
+    }
+    .billing-address p {
+        width: 250px;
+        font-size: 1rem;
+        font-weight: normal;
+        margin-top: 10px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+    }
+    th {
+        border-bottom: 1px solid #4b5563;
+        padding: 15px 10px;
+        text-align: center;
+    }
+
+    td {
+        border-bottom: 1px solid #4b5563;
+        padding: 15px 10px;
+        text-align: center;
+    }
+    th {
+        background-color: #000000;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+    .total-row td {
+        border: none;
+        padding-top: 30px;
+        text-align: right;
+    }
+    .terms {
+        max-width: 600px;
+        margin-top: 30px;
+    }
+    .terms h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .terms p {
+        font-size: 1rem;
+        font-weight: normal;
+        margin-top: 10px;
+    }
+</style>
+
+<body>
+
+<section class="py-20 overflow-hidden relative">
+    <div class="container mx-auto">
+        <div class="invoice-container">
+            <table>
+            <tr style="border-color: transparent">
+                <td style="border:none; text-align: left;"><img src="" alt=""></td>
+                <td style="border:none"></td>
+                <td style="border:none; text-align: right;"><h4>Facture # </h4></td>
+            </tr>
+            </table>
+            <div class="invoice-info">
+                <h1 class="project-name">MaBoutique.fr</h1>
+
+                <div class="billing-address">
+                    <h4>Facture a :</h4>
+                    <p>{{ infoUser.lastName }}  {{ infoUser.firstName }}</p>
+                    <p>Street Avenue 10019 Miami, fl</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table style="margin-top: 30px">
+                    <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td class="p-5 text-lg font-medium border-b border-gray-800"> </td>
+                            <td class="p-5 text-lg font-medium border-b border-gray-800">  €</td>
+                            <td class="p-5 text-lg font-medium border-b border-gray-800 text-center"></td>
+                            <td class="p-5 text-lg font-medium border-b border-gray-800 text-end"> €</td>
+                        </tr>
+                    <tr class="total-row">
+                        <td colspan="4"><b>Total</b>  €</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="terms">
+                <h1>Termes et conditions:</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation uilamco laboris nisi ut aliquip ex ea luptatem.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation uilamco laboris nisi ut aliquip ex ea luptatem.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+
