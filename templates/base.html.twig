@@ -24,6 +24,21 @@
     {% endblock %}
 </head>
 <body class="fond">
+    {% for message in app.flashes('notification') %}
+        <div class="alert alert-info alert-dismissible fixed top-2 right-2" data-aos="fade-down" data-aos-duration="1000" role="alert">
+            <div class="bg-white text-black rounded-lg shadow-lg py-6 px-6">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+    <script>
+        $(document).ready(function() {
+            // Faire disparaître l'alerte automatiquement après 3 secondes
+            setTimeout(function() {
+                $('.alert').fadeOut('slow');
+            }, 3000); // 3000ms = 3s
+        });
+    </script>
     <header class="z-50">
         <div id="myDiv" class="top- mx-auto my-1 mb-2 border-10 border-solid border-blue-100 overflow-hidden shadow-md">
             <div class="w-screen lg:w-full pr-8 pl-full whitespace-nowrap custom-scroll text-white">
