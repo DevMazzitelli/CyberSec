@@ -53,9 +53,12 @@ class ProfilController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // Tu récupères le mot de passe et tu le hash
+            $plainPassword = $form->get('password')->getData();
+            $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
+            $user->setPassword($hashedPassword);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $entityManager->persist($user); // Persist : Prendre en compte les informations
+            $entityManager->flush(); // Flush : Envoyer les informations
 
             return $this->redirectToRoute('app_profile');
         }
