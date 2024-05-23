@@ -5,149 +5,183 @@
 {% block body %}
 
     {% block nav %}
-    <section class="fond fixed top-0 w-screen bg-transparent z-50">
-        <nav id="navUn" class="relative px-4 py-4 flex justify-between items-center bg-fond z-20">
-            <a class="text-3xl font-bold leading-none" href="{{ path('app_home') }}">
-                <img class="w-14 h-14" src="{{ asset('medias/images/logo_cs-removebg-preview.png') }}" alt="Logo entreprise">
-            </a>
-            <div class="lg:hidden">
-                <button class="navbar-burger flex items-center text-blue-600 p-3">
-                    <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <title>Mobile menu</title>
-                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                    </svg>
-                </button>
-            </div>
-            <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
-                <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Documentations</a></li>
-                <li class="text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                    </svg>
-                </li>
-                <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Cours</a></li>
-                <li class="text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                    </svg>
-                </li>
-                <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Abonnement</a></li>
-                <li class="text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                    </svg>
-                </li>
-                <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Contact</a></li>
-                <li class="text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                    </svg>
-                </li>
-                <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
-            </ul>
-            {% if app.user %}
-                <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">Déconnexion</a>
-                <button type="button" class="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
-                    <div class="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                        <a href="{{ path('app_profile') }}">
-                            <img  href='' src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="object-cover w-full h-full" alt="avatar">
-                        </a>
-                    </div>
-
-                    <h3 class="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Khatab wedaa</h3>
-                </button>
-            {% else %}
-                <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_login') }}">Connexion</a>
-                <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_register') }}">S'inscrire</a>
-            {% endif %}
-        </nav>
-    </section>
-    {% endblock %}
-    <section class="bg-fond">
-            <aside class="hidden lg:flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
-                <a href="#" class="mx-auto">
-                    <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/full-logo.svg" alt="">
+        <!---->
+        <section class="fond fixed top-0 w-screen bg-transparent z-50">
+            <nav class="relative px-4 py-4 flex justify-between items-center bg-fond z-20">
+                <a class="text-3xl font-bold leading-none" href="{{ path('app_home') }}">
+                    <img class="w-14 h-14" src="{{ asset('medias/images/logo_cs-removebg-preview.png') }}" alt="Logo entreprise">
                 </a>
-
-                <div class="flex flex-col items-center mt-6 -mx-2">
-                    <img class="object-cover w-24 h-24 mx-2 rounded-full" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="avatar">
-                    <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200 capitalize text-center">{{ infoUser.firstname }} {{ infoUser.lastname }}</h4>
-                    <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">{{ infoUser.email }}</p>
-                    <a href="{{ path('app_profil_modification') }}" class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">Modifier le profil</a>
-
+                <div class="lg:hidden">
+                    <button class="navbar-burger flex items-center text-blue-600 p-3">
+                        <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <title>Mobile menu</title>
+                            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                        </svg>
+                    </button>
                 </div>
+                <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
+                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Documentations</a></li>
+                    <li class="text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                        </svg>
+                    </li>
+                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Cours</a></li>
+                    <li class="text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                        </svg>
+                    </li>
+                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Abonnement</a></li>
+                    <li class="text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                        </svg>
+                    </li>
+                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Contact</a></li>
+                    <li class="text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                        </svg>
+                    </li>
+                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
+                </ul>
+                {% if app.user %}
+                    <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">Déconnexion</a>
+                    <button type="button" class="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
+                        <div class="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
+                            <a href="{{ path('app_profile') }}">
+                                <img  href='' src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="object-cover w-full h-full" alt="avatar">
+                            </a>
+                        </div>
 
-                <div class="flex flex-col justify-between flex-1 mt-6">
-                    <nav>
-                        <a class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-gray-200" href="#">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19 11H5M19 11C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.8954 3.89543 11 5 11M19 11V9C19 7.89543 18.1046 7 17 7M5 11V9C5 7.89543 5.89543 7 7 7M7 7V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V7M7 7H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-
-                            <span class="mx-4 font-medium">Dashboard</span>
-                        </a>
-
-                        <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-
-                            <span class="mx-4 font-medium">Accounts</span>
-                        </a>
-
-                        <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-
-                            <span class="mx-4 font-medium">Tickets</span>
-                        </a>
-
-                        <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10.3246 4.31731C10.751 2.5609 13.249 2.5609 13.6754 4.31731C13.9508 5.45193 15.2507 5.99038 16.2478 5.38285C17.7913 4.44239 19.5576 6.2087 18.6172 7.75218C18.0096 8.74925 18.5481 10.0492 19.6827 10.3246C21.4391 10.751 21.4391 13.249 19.6827 13.6754C18.5481 13.9508 18.0096 15.2507 18.6172 16.2478C19.5576 17.7913 17.7913 19.5576 16.2478 18.6172C15.2507 18.0096 13.9508 18.5481 13.6754 19.6827C13.249 21.4391 10.751 21.4391 10.3246 19.6827C10.0492 18.5481 8.74926 18.0096 7.75219 18.6172C6.2087 19.5576 4.44239 17.7913 5.38285 16.2478C5.99038 15.2507 5.45193 13.9508 4.31731 13.6754C2.5609 13.249 2.5609 10.751 4.31731 10.3246C5.45193 10.0492 5.99037 8.74926 5.38285 7.75218C4.44239 6.2087 6.2087 4.44239 7.75219 5.38285C8.74926 5.99037 10.0492 5.45193 10.3246 4.31731Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-
-                            <span class="mx-4 font-medium">Settings</span>
-                        </a>
-                    </nav>
-                </div>
-            </aside>
+                        <h3 class="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Khatab wedaa</h3>
+                    </button>
+                {% else %}
+                    <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_login') }}">Connexion</a>
+                    <a class="relative right-6 hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="{{ path('app_register') }}">S'inscrire</a>
+                {% endif %}
+            </nav>
         </section>
+    {% endblock %}
 
-        <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
-            <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Account settings</h2>
-
-            <form>
-                <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                    <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="username">Username</label>
-                        <input id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-                    </div>
-
-                    <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="emailAddress">Email Address</label>
-                        <input id="emailAddress" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-                    </div>
-
-                    <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="password">Password</label>
-                        <input id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-                    </div>
-
-                    <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="passwordConfirmation">Password Confirmation</label>
-                        <input id="passwordConfirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-                    </div>
+    <div class="pt-16 w-full bg-gray-400 p-8">
+        <div class="bg-white rounded-lg shadow-xl pb-8">
+            <div class="flex flex-col items-center">
+                <img src="{{ asset('medias/images/Logo Linkedin.webp') }}" class="w-40 border-4 border-white rounded-full" alt="user photo">
+                <div class="flex items-center space-x-2 mt-2">
+                    <p class="text-2xl">{{ infoUser.firstname }} {{ infoUser.lastname }}</p>
+                    <span class="bg-blue-500 rounded-full p-1" title="Verified">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-100 h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </span>
                 </div>
-
-                <div class="flex justify-center mt-6">
-                    <button class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
+            </div>
+            <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+                <div class="flex items-center space-x-4 mt-2">
+                    <a href="">
+                        <button class="flex items-center bg-red1 hover:bg-red-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                            <span>Supprimer profil</span>
+                        </button>
+                    </a>
                 </div>
-            </form>
-    </section>
+            </div>
+        </div>
 
+        <div class="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+            <div class="w-full flex flex-col 2xl:w-full">
+                <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
+                    <h4 class="text-xl text-gray-900 font-bold">Information personnel :</h4>
+                    <ul class="mt-2 text-gray-700">
+                        <li class="flex border-y py-2">
+                            <span class="font-bold w-26">Nom complet :</span>
+                            <span class="text-gray-700 ml-1">{{ infoUser.firstname }} {{ infoUser.lastname }}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">Email :</span>
+                            <span class="text-gray-700">{{ infoUser.email }}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">Langue(s) :</span>
+                            <span class="text-gray-700">Francais</span>
+                        </li>
+                    </ul>
+
+                    <div class="mt-4">
+                        <a href="{{ path('app_profil_modification') }}">
+                            <button class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+                                </svg>
+                                <span>Modifier profil</span>
+                            </button>
+                        </a>
+                    </div>
+
+                    <!--
+                        <ul class="mt-4 text-gray-700">
+                            <h4 class="text-xl text-gray-900 font-bold">Information de livraison :</h4>
+                            // Boucle for sur adresse
+
+
+                                <li class="flex border-b py-2">
+                                    <span class="font-bold w-24">Rue :</span>
+                                    <span class="text-gray-700">Pas d'infomations</span>
+                                </li>
+                                <li class="flex border-b py-2">
+                                    <span class="font-bold w-24">Ville :</span>
+                                    <span class="text-gray-700">Pas d'infomations</span>
+                                </li>
+                                <li class="flex border-b py-2">
+                                    <span class="font-bold w-26">Code Postal :</span>
+                                    <span class="text-gray-700 ml-1">Pas d'infomations</span>
+                                </li>
+                                <li class="flex border-b py-2">
+                                    <span class="font-bold w-24">Pays :</span>
+                                    <span class="text-gray-700">Pas d'infomations</span>
+                                </li>
+                        </ul>
+
+                        /* S'il n'y a pas d'adresse de livraison afficher "Ajouter une adresse de livraison" sinon afficher "Modifier l'adresse de livraison" */
+                        <div class="mt-4">
+                           // Faire un if
+                                <a href="">
+                                    <button class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                                        <span>Ajouter une adresse de livraison</span>
+                                    </button>
+                                </a>
+                            // Faire un else
+                                <div class="flex gap-5">
+                                    <a href="">
+                                        <button class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                                            <span>Modifier l'adresse de livraison</span>
+                                        </button>
+                                    </a>
+
+                                    <a href="">
+                                        <button class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                                            <span>Consulter mon panier</span>
+                                        </button>
+                                    </a>
+                                </div>
+
+                            // Mettre le endif
+                        </div>
+                        -->
+
+
+                </div>
+            </div>
+            <div class="flex flex-col w-full 2xl:w-full">
+                <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
+                    <h4 class="text-xl text-gray-900 font-bold">Mes commandes</h4>
+
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
 
