@@ -31,8 +31,8 @@
             </div>
         </div>
 
+        {% block nav %}
         <section class="fond fixed top-0 w-screen bg-transparent z-50">
-            {% block nav %}
             <nav id="navUn" class="relative px-4 py-4 flex justify-between items-center bg-fond z-20">
                 <a class="text-3xl font-bold leading-none" href="{{ path('app_home') }}">
                     <img class="w-14 h-14" src="{{ asset('medias/images/logo_cs-removebg-preview.png') }}" alt="Logo entreprise">
