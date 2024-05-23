@@ -1,0 +1,66 @@
+#quatreDoc {
+    background-image: url("../../public/medias/images/Cisco.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#troisdoc {
+    background-image: url("../../public/medias/images/VM.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+
+#deuxdoc {
+    background-image: url("../../public/medias/images/Proxmox.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#undoc {
+    background-image: url("../../public/medias/images/DHCP DNS.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+
+#quatrecours {
+    background-image: url("../../public/medias/images/Cryptographie.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+
+#troiscours {
+    background-image: url("../../public/medias/images/Scriptingza.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+#deuxcours {
+    background-image: url("../../public/medias/images/pentest.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#uncours {
+    background-image: url("../../public/medias/images/Windows-11-logo.webp");
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* Appliquez cette règle à votre conteneur parent (flexbox ou grille) */
+#votre-conteneur {
+    display: flex; /* ou grid, selon votre cas */
+    align-items: center; /* Alignez les éléments au centre sur l'axe secondaire */
+}
+
+.custom-scroll {
+    animation: scroll 15s linear infinite;
+}
+
+#Avis2, #Avis3, #Avis4 {
+    /* Placement de l'avis 2,3 et 4 invisible, possibilité de les voir avec les boutons (voir js) */
+    display: none;
+}

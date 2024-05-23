@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil{% endblock %}
+
+{% block body %}
+    {{ form_start(modificationProfil) }}
+
+    {{ form_label(modificationProfil.email) }}
+    {{ form_widget(modificationProfil.email) }}
+
+    {{ form_label(modificationProfil.password) }}
+    {{ form_widget(modificationProfil.password, {'attr': {'value': ''}}) }}
+
+    {{ form_label(modificationProfil.firstname) }}
+    {{ form_widget(modificationProfil.firstname) }}
+
+    {{ form_label(modificationProfil.lastname) }}
+    {{ form_widget(modificationProfil.lastname) }}
+
+    <button type="submit">Enregistrer</button>
+
+    {{ form_end(modificationProfil) }}
+{% endblock %}

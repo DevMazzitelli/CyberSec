@@ -35,6 +35,9 @@ class RegistrationController extends AbstractController
                     $user,
                     $form->get('plainPassword')->getData()
                 )
+
+            // TODO: On attribue à l'utilisateur le rôle user à l'inscription
+
             );
 
             $entityManager->persist($user);
@@ -79,3 +82,5 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_register');
     }
 }
+
+// TODO : Vérifier pourquoi le Is_Verified ne fonctionne pas correctement.

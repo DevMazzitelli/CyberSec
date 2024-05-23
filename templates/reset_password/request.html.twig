@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser votre mot de passe{% endblock %}
+
+{% block body %}
+    <div class="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center"
+         style="background-image: url('')">
+        <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+        <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl z-10">
+            {% for flash_error in app.flashes('reset_password_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+            <div class="text-center">
+                <h2 class="mt-6 text-3xl font-bold text-gray-900">
+                    Réinitialiser votre mot de passe
+                </h2>
+                <p class="mt-2 text-sm text-gray-600">
+                    Entrer votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+                </p>
+            </div>
+            {{ form_start(requestForm) }}
+            <div class="relative">
+                {{ form_row(requestForm.email, {'attr': {'class': 'w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500', 'placeholder': 'exemple@email.com'}}) }}
+            </div>
+            <div class="mt-8">
+                <button type="submit" class="w-full flex justify-center bg-indigo-500 text-gray-100 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg cursor-pointer transition ease-in duration-300">
+                    Réinitialiser mon mot de passe
+                </button>
+            </div>
+            {{ form_end(requestForm) }}
+            <p class="mt-6 text-sm text-gray-500">
+                Si vous ne recevez pas d'email, veuillez vérifier votre dossier spam. <a href="{{ path('app_login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">Retour à la page de connexion</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
