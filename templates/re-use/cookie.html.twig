@@ -1,0 +1,31 @@
+<section id="cookie-notification" class="fixed max-w-md p-4 bg-white border border-gray-200 dark:bg-gray-800 right-12 bottom-16 dark:border-gray-700 rounded-2xl">
+    <h2 class="font-semibold text-gray-800 dark:text-white">🍪 Cookies</h2>
+
+    <p class="mt-4 text-sm text-gray-600 dark:text-gray-300">Nous utilisons des cookies pour vous offrir une meilleure expérience de navigation. En continuant à utiliser ce site, vous acceptez cette politique.
+        <a href="" class="text-blue-500 hover:underline">En savoir plus</a>
+
+    <div class="flex items-center justify-between mt-4 gap-x-4 shrink-0">
+        <button class="text-xs text-gray-800 underline transition-colors duration-300 dark:text-white dark:hover:text-gray-400 hover:text-gray-600 focus:outline-none" title="Voir plus sur les cookies">
+        </button>
+
+        <button id="close-cookie-notification" class=" text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none" title="Fermer la notification">
+            Fermer
+        </button>
+    </div>
+</section>
+
+<script defer>
+    document.getElementById('close-cookie-notification').addEventListener('click', function() {
+        // Enregistrer dans le localStorage que l'utilisateur a fermé la notification
+        localStorage.setItem('cookieNotificationClosed', 'true');
+
+        // Masquer la notification
+        document.getElementById('cookie-notification').style.display = 'none';
+    });
+
+    // Vérifier si l'utilisateur a déjà fermé la notification
+    if (localStorage.getItem('cookieNotificationClosed') === 'true') {
+        // Si oui, masquer la notification
+        document.getElementById('cookie-notification').style.display = 'none';
+    }
+</script>
