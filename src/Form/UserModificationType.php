@@ -4,8 +4,11 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserModificationType extends AbstractType
 {
@@ -13,7 +16,20 @@ class UserModificationType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('password')
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
+                'empty_data' => null,
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'min' => 8,
+                        'max' => 24,
+                        'minMessage' => 'Mot de passe trop court',
+                        'maxMessage' => 'Mot de passe trop long',
+                    ])
+                ]
+            ])
             ->add('firstname')
             ->add('lastname')
         ;
