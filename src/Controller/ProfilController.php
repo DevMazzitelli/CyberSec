@@ -54,13 +54,19 @@ class ProfilController extends AbstractController
 
             // Tu récupères le mot de passe et tu le hash
             $plainPassword = $form->get('password')->getData();
-            $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
-            $user->setPassword($hashedPassword);
+            if (!empty($plainPassword)) {
+                $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
+                $user->setPassword($hashedPassword);
+            }
 
             $entityManager->persist($user); // Persist : Prendre en compte les informations
             $entityManager->flush(); // Flush : Envoyer les informations
 
+            $this->addFlash('notification', 'Votre profil a bien été modifié !');
+
             return $this->redirectToRoute('app_profile');
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('notification', 'Erreur lors de la modification de votre profil');
         }
 
         return $this->render('profil/modification.html.twig', [
