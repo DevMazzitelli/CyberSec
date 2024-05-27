@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserModificationType extends AbstractType
 {
@@ -20,8 +19,8 @@ class UserModificationType extends AbstractType
                 'label' => 'Mot de passe',
                 'empty_data' => null,
                 'mapped' => false,
+                'required' => false, // Ajout de cette ligne
                 'constraints' => [
-                    new NotBlank(),
                     new Length([
                         'min' => 8,
                         'max' => 24,

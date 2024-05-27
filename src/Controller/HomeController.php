@@ -19,7 +19,7 @@ class HomeController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function contact(): Response
     {
-        return $this->render('home/contact.html.twig', [
+        return $this->render('contact/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
     }
@@ -31,4 +31,22 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/ml', name: 'app_ml')]
+    public function ml(): Response
+    {
+        return $this->render('home/ml.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
+
+    #[Route('/abonnement', name: 'app_abonnement')]
+    public function abonnement(): Response
+    {
+        return $this->render('home/abonnement.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
 }

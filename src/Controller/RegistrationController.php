@@ -82,5 +82,3 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_register');
     }
 }
-
-// TODO : Vérifier pourquoi le Is_Verified ne fonctionne pas correctement.
