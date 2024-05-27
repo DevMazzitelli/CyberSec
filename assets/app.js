@@ -11,5 +11,8 @@ import './styles/keyframes.css';
 import './styles/home.css';
 
 import './js/avisClient'
+import './js/menuBurger'
 import './js/nav.js';
 import './js/carroussel.js';
+import './js/faq.js';
+import './js/delay.js';

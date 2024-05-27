@@ -3,6 +3,7 @@
 {% block title %}Modification du profil{% endblock %}
 
 {% block body %}
+    <h1>Modifier votre profil</h1>
     {{ form_start(modificationProfil) }}
 
     {{ form_label(modificationProfil.email) }}
@@ -17,7 +18,10 @@
     {{ form_label(modificationProfil.lastname) }}
     {{ form_widget(modificationProfil.lastname) }}
 
-    <button type="submit">Enregistrer</button>
+    {{ form_label(modificationProfil.profilePicture) }}
+    {{ form_widget(modificationProfil.profilePicture) }}
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
 
     {{ form_end(modificationProfil) }}
 {% endblock %}

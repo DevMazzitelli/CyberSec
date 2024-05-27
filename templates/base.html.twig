@@ -58,19 +58,19 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
                     </li>
-                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Abonnement</a></li>
+                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="{{ path('app_abonnement') }}">Abonnement</a></li>
                     <li class="text-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
                     </li>
-                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Contact</a></li>
+                    <li><a href="{{ path('app_contact') }}" class="text-sm text-gray-400 hover:text-gray-500">Contact</a></li>
                     <li class="text-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
                     </li>
-                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
+                    <li><a href="{{ path('app_faq') }}" class="text-sm text-gray-400 hover:text-gray-500" >FAQ</a></li>
                 </ul>
                 {% if app.user %}
                 <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">Déconnexion</a>
@@ -115,19 +115,19 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
                     </li>
-                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Abonnement</a></li>
+                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="{{ path('app_abonnement') }}">Abonnement</a></li>
                     <li class="text-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
                     </li>
-                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Contact</a></li>
+                    <li><a href="{{ path('app_contact') }}" class="text-sm text-gray-400 hover:text-gray-500">Contact</a></li>
                     <li class="text-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
                     </li>
-                    <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">FAQ</a></li>
+                    <li><a href="{{ path('app_faq') }}" class="text-sm text-gray-400 hover:text-gray-500">FAQ</a></li>
                 </ul>
                 {% if app.user %}
                 <a class="relative right-6 hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="{{ path('app_logout') }}">Déconnexion</a>
@@ -198,9 +198,9 @@
                 </a>
 
                 <div class="flex flex-wrap justify-center mt-6 -mx-4">
-                    <a href="#" class="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit">Condition générales de vente (CGV)</a>
-                    <a href="#" class="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit">Politique de confidentialité</a>
-                    <a href="#" class="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit">Mentions légales</a>
+                    <a href="{{ path('app_cgv') }}" class="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit">Condition générales de vente (CGV)</a>
+                    <a href="{{ path('app_politique') }}" class="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit">Politique de confidentialité</a>
+                    <a href="{{ path('app_ml') }}" class="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit">Mentions légales</a>
                     <a href="#" class="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit">Cookies</a>
                 </div>
             </div>
@@ -209,18 +209,14 @@
 
             <div class="flex flex-col items-center sm:flex-row sm:justify-between">
                 <p class="text-sm text-gray-500 dark:text-gray-300">© 2024 CyberSec. Tous droits réservés. &nbsp;&nbsp;&nbsp;&nbsp; <a href="">Support@cybersec.com</a></p>
-
-                <div class="flex -mx-2">
-                    <a href="" target="_blank" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="LinkeDin">
-
-                        <img class="w-7 h-7"  src="{{ asset('medias/images/Logo Linkedin.webp') }}" alt="logo Linkedin">
-                    </a>
-
-                    <a href="https://discord.gg/u9UsszRGnZ" target="_blank" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Discord">
-
-                        <img class="w-6 h-6"  src="{{ asset('medias/images/DDISCORD.png') }}" alt="logo discord">
-                    </a>
-                </div>
+                    <div class="flex">
+                        <a href="" target="_blank" class="mx-0.5 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="LinkedIn">
+                            <img class=" ml-2 w-6 h-6" src="{{ asset('medias/images/Logo Linkedin.webp') }}" alt="logo LinkedIn">
+                        </a>
+                        <a href="https://discord.gg/u9UsszRGnZ" target="_blank" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Discord">
+                            <img class="w- h-6" src="{{ asset('medias/images/DDISCORD.png') }}" alt="logo Discord">
+                        </a>
+                    </div>
             </div>
         </div>
     </footer>

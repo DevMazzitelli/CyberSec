@@ -9,6 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Optional;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class UserModificationType extends AbstractType
 {
@@ -16,12 +19,13 @@ class UserModificationType extends AbstractType
     {
         $builder
             ->add('email')
+            // Tu vas devoir modifier une contraite et rajoute quelque chose.
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'empty_data' => null,
                 'mapped' => false,
+                'required' => false,
                 'constraints' => [
-                    new NotBlank(),
                     new Length([
                         'min' => 8,
                         'max' => 24,
@@ -32,6 +36,12 @@ class UserModificationType extends AbstractType
             ])
             ->add('firstname')
             ->add('lastname')
+            ->add('profilePicture', FileType::class, [
+                'label' => 'Photo de profil',
+                'required' => false,
+                'mapped' => false,
+                'attr' => ['class' => 'form-control-file']
+            ]);
         ;
     }
 

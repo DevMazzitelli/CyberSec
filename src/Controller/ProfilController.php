@@ -51,11 +51,31 @@ class ProfilController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // On déclare notre ancienne image de notre utilisateur
+            $ancienneImage = $user->getProfilePicture();
+            // On déclare une nouvelle image
+            $imageFile = $form->get('profilePicture')->getData();
 
             // Tu récupères le mot de passe et tu le hash
             $plainPassword = $form->get('password')->getData();
+            // Si on rentre un password, dans ce cas là on le change, sinon on valide notre formulaire sans changer notre mot de passe.
+            if (!empty($plainPassword)) {
             $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
             $user->setPassword($hashedPassword);
+            }
+
+
+            // On vérifie si on a une image qui est dans le fichier medias/uploads/profile_pictures (CONCATENISATION) / NOM DE TON IMAGE
+            if($ancienneImage && file_exists($this->getParameter('profile_pictures_directory') . '/' . $ancienneImage)) {
+                unlink($this->getParameter('profile_pictures_directory') . '/' . $ancienneImage);
+            }
+
+            if ($imageFile) {
+                $newFileName = $imageFile->getClientOriginalName();
+                $imageFile->move($this->getParameter('profile_pictures_directory'), $newFileName);
+                $user->setProfilePicture($newFileName);
+            }
+
 
             $entityManager->persist($user); // Persist : Prendre en compte les informations
             $entityManager->flush(); // Flush : Envoyer les informations
