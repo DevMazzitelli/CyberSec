@@ -13,3 +13,5 @@ import './styles/home.css';
 import './js/avisClient'
 import './js/nav.js';
 import './js/carroussel.js';
+import './js/faq.js';
+import './js/delay.js';

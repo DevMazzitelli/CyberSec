@@ -44,6 +44,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePicture = null;
+
+    #[ORM\Column]
+    private ?bool $is_sub = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,7 +108,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->password;
     }
-
 
 
     public function setPassword(string $password): static
@@ -176,5 +181,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function isSub(): ?bool
+    {
+        return $this->is_sub;
+    }
+
+    public function setSub(bool $is_sub): static
+    {
+        $this->is_sub = $is_sub;
+
+        return $this;
+    }
+
+
+
+
 
 }

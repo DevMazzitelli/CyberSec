@@ -1,0 +1,113 @@
+{% extends '../../base.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+    <section class="bg-fond text-white">
+        <div class="max-w-4xl mx-auto p-6">
+            <header class="mb-8 text-center">
+                <h1 class="text-3xl font-bold">Ordinateur et ses composants</h1>
+            </header>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Introduction</h2>
+                <p>Dans ce cours, vous allez apprendre les bases de l'informatique, son histoire, son utilisation, ainsi que l'ordinateur et ses composants de manière générale. Ce cours vous permettra, pour ceux qui n'ont aucune connaissance en informatique, de vous familiariser avec les bases de l'informatique et d'un ordinateur.</p>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Objectifs</h2>
+                <ul class="list-disc list-inside">
+                    <li>Acquérir des connaissances de base en informatique</li>
+                    <li>Comprendre l'utilisation de base d'un ordinateur</li>
+                </ul>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Prérequis</h2>
+                <p>Aucun prérequis</p>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Qu'est-ce qu'un ordinateur ?</h2>
+                <p>Un ordinateur est une machine créée par les humains pour faciliter diverses tâches. Il est multitâche, ce qui signifie qu'il peut effectuer plusieurs actions simultanément. Lorsqu'un utilisateur demande à l'ordinateur d'exécuter une action, l'ordinateur vérifie d'abord si cette action est faisable. Si c'est le cas, il exécute la demande de l'utilisateur et affiche le résultat à l'écran.</p>
+                <p>Il existe trois domaines fondamentaux dans l'informatique : le développement, le système et le réseau. L'informatique n'est pas uniquement virtuelle; elle nécessite du matériel physique pour fonctionner.</p>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Les Composants de l'Ordinateur</h2>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Le Clavier</h3>
+                <p>Le clavier est un dispositif d'entrée permettant d'écrire et d'envoyer des commandes à l'ordinateur. Il existe plusieurs types d'arrangements spécifiques des caractères alphabétiques sur un clavier, les plus connus étant QWERTY et AZERTY. Ces arrangements varient en fonction des langues, des accents et des préférences typographiques des utilisateurs. Par exemple, les développeurs préfèrent souvent le clavier QWERTY en raison de la disposition plus accessible des caractères typographiques (' ; / ][ “).</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">La Carte Mère</h3>
+                <p>La carte mère est le circuit imprimé principal d'un ordinateur, comprenant plusieurs composants attachés à une surface plane fixe :</p>
+                <ul class="list-disc list-inside">
+                    <li>Ports d'entrée/sortie</li>
+                    <li>Emplacements d'extension PCI</li>
+                    <li>Connecteurs de bus et d'alimentation</li>
+                    <li>Dissipateurs de chaleur et points de montage pour les ventilateurs et les principaux composants, y compris l'unité centrale (CPU) et les coprocesseurs en option</li>
+                    <li>BIOS (Basic Input Output System)</li>
+                    <li>Prises de mémoire pour RAM, ROM et cache</li>
+                    <li>Circuit d'interconnexion</li>
+                </ul>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Les Processeurs</h3>
+                <p>Les ordres donnés à l'ordinateur sont envoyés à un composant interne nommé "processeur". Le processeur, souvent appelé le cerveau de l'ordinateur, exécute les instructions et communique avec les autres composants. Il utilise le binaire pour envoyer et recevoir des données et sa puissance est mesurée en Hertz (Hz).</p>
+                <p>Un processeur monocœur ne peut traiter qu'une seule instruction à la fois.</p>
+                <p>Un processeur multicœur (dual-core, quad-core, etc.) peut traiter plusieurs instructions simultanément, chaque cœur étant capable de traiter des instructions individuellement.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Hyper-Threading</h3>
+                <p>Chaque processus comprend au moins un thread, une séquence d’instructions que le processeur doit traiter. Un thread est une tâche que doit exécuter le processeur. Un cœur ne peut exécuter qu’un seul thread à la fois. L'Hyper-Threading permet à chaque cœur de traiter deux threads simultanément, ce qui est utile pour les tâches multiples comme l'utilisation de plusieurs applications lourdes.</p>
+                <p>Pour des tâches simples comme la navigation sur Internet ou la vérification des e-mails, l'Hyper-Threading n'est pas nécessaire.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Mémoire Cache</h3>
+                <p>(Description à ajouter : Expliquez brièvement ce qu'est la mémoire cache et son rôle dans le fonctionnement du processeur.)</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Comparaison AMD et Intel</h3>
+                <p>Pour voir les informations sur son processeur, il existe plusieurs méthodes :</p>
+
+                <h4 class="text-lg font-semibold mb-2 mt-4">Sur Windows :</h4>
+                <ul class="list-disc list-inside">
+                    <li>Gestionnaire des tâches</li>
+                    <li>Informations systèmes</li>
+                    <li>Gestionnaire des périphériques</li>
+                    <li>Outils téléchargeables sur le web</li>
+                </ul>
+
+                <h4 class="text-lg font-semibold mb-2 mt-4">Sur Linux :</h4>
+                <ul class="list-disc list-inside">
+                    <li>Commande <code>top</code> ou <code>htop</code> (activité du processeur)</li>
+                    <li>Commandes <code>less /proc/cpuinfo</code>, <code>lscpu</code>, <code>lshw -class processor</code>, etc.</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="flex justify-center pb-5">
+            <a href="#" class="flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
+                previous
+            </a>
+
+            <a href="#" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
+                1
+            </a>
+
+            <a href="#" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
+                2
+            </a>
+
+            <a href="#" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
+                3
+            </a>
+
+            <a href="#" class="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
+                Next
+            </a>
+        </div>
+
+
+
+
+    </section>
+
+
+{% endblock %}

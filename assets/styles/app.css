@@ -11,6 +11,10 @@ html,body{
     z-index: 1000;
 }
 
+#notification {
+    z-index: 100;
+}
+
 
 
 

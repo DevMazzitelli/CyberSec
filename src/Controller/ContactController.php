@@ -23,7 +23,7 @@ class ContactController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/contact', name: 'contact')]
+    #[Route('/contact', name: 'app_contact')]
     public function index(Request $request, MailerInterface $mailer): Response
     {
         $contact = new Contact();
@@ -38,7 +38,7 @@ class ContactController extends AbstractController
             // Envoie de l'email
             $this->sendEmail($contact, $mailer);
 
-            $this->addFlash('success', 'Votre message a été envoyé avec succès.');
+            $this->addFlash('notification', 'Votre message a été envoyé avec succès.');
 
             return $this->redirectToRoute('app_home'); // Redirige vers la page d'accueil
         }

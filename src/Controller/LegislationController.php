@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class LegislationController extends AbstractController
 {
-    #[Route('/ml', name: 'app_ml')]
+    #[Route('/mentions_légales', name: 'app_ml')]
     public function index(): Response
     {
         return $this->render('legislation/index.html.twig', [
@@ -16,7 +16,7 @@ class LegislationController extends AbstractController
         ]);
     }
 
-    #[Route('/politique', name: 'app_politique')]
+    #[Route('/politique_de_confidentialité', name: 'app_politique')]
     public function politique(): Response
     {
         return $this->render('legislation/politique.html.twig', [
