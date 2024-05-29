@@ -33,7 +33,7 @@ class SubscribsController extends AbstractController
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
-    #[Route('/create_checkout-session', name: 'app_create_checkout_session')]
+    #[Route('/abonnement_Un', name: 'app_abonnementUn')]
     public function createCheckoutSession(Request $request)
     {
         try {
@@ -91,6 +91,8 @@ class SubscribsController extends AbstractController
     #[Route('/payment-cancel', name: 'payment_cancel')]
     public function paymentCancel()
     {
+        $this->addFlash('notification', "Paiement échoué, vous avez été renvoyé vers la page d'abonnement");
+
         return $this->render('subscribs/cancel.html.twig');
     }
 }
