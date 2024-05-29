@@ -12,6 +12,8 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
         "dompdf/dompdf": "^3.0",
+        "easycorp/easyadmin-bundle": "^4.10",
+        "stripe/stripe-php": "^14.8",
         "symfony/console": "7.0.*",
         "symfony/dotenv": "7.0.*",
         "symfony/flex": "^2",
