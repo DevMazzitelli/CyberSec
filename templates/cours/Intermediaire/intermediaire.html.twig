@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+
+
+    <section class="bg-white dark:bg-gray-900">
+        <div class="container px-6 py-12 mx-auto">
+            <h1 class="text-center text-2xl font-semibold text-gray-800 lg:text-3xl dark:text-white">Cours</h1>
+
+            <div class="mt-8 lg:mt-16 flex justify-center space-x-8">
+                <a href="{{ path('app_cours_facile') }}">
+                    <button class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                        Facile
+                    </button>
+                </a>
+
+
+                    <button class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                        intermédiaire
+                    </button>
+
+
+
+                <a href="{{ path('app_cours_difficile') }}">
+                    <button class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                        Difficile
+                    </button>
+                </a>
+            </div>
+
+            <div class="flex flex-wrap mt-8 xl:mt-16 lg:flex lg:-mx-12">
+                <div class="flex-1 mt-8 lg:mx-12 lg:mt-0">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 ">
+                        <div>
+                            <img class="object-cover w-full rounded-lg h-96"
+                                 src="https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80"
+                                 alt="">
+
+                            <a href="{{ path('app_cours_1_ordinateur_composants') }}">
+                                <h2 class="mt-4 text-xl font-semibold text-gray-800 capitalize dark:text-white">Ordinateur & composants</h2>
+                            </a>
+
+                            <p class="mt-2 text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400">Niveau : intermédiaire</p>
+                        </div>
+
+                        <div>
+                            <img class="object-cover w-full rounded-lg h-96"
+                                 src="https://images.unsplash.com/photo-1621609764180-2ca554a9d6f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
+                                 alt="">
+                            <h2 class="mt-4 text-xl font-semibold text-gray-800 capitalize dark:text-white">Block of Ui kit collections</h2>
+                            <p class="mt-2 text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400">Ui kit</p>
+                        </div>
+
+                        <div>
+                            <img class="object-cover w-full rounded-lg h-96"
+                                 src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                                 alt="">
+                            <h2 class="mt-4 text-xl font-semibold text-gray-800 capitalize dark:text-white">Ton’s of mobile mockup</h2>
+                            <p class="mt-2 text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400">Mockups</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

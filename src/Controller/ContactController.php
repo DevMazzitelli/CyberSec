@@ -52,6 +52,7 @@ class ContactController extends AbstractController
     {
         $email = (new Email())
             ->from($contact->getEmail())
+            ->subject('Mail de contact')
             ->to('rayanasa77@gmail.com') // Remplacez par votre adresse email
             ->html($this->renderView('emails/contact.html.twig', ['contact' => $contact]));
 
