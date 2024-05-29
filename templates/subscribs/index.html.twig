@@ -38,9 +38,37 @@
                                         <span class="text-slate-500 font-medium">/mo</span>
                                     </div>
                                     <div class="text-sm text-slate-500 mb-5">Profitez d'un accès de base à notre plateforme avec des fonctionnalités essentielles pour démarrer votre expérience.</div>
-                                    <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" href="{{ path('app_create_checkout_session') }}">
+                                    <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" id="checkout-button" href="javascript:void(0)">
                                         Obtenez l'abonnement Essentiel
                                     </a>
+
+                                    <script type="text/javascript">
+                                        var stripe = Stripe('{{ stripe_public_key }}'); // Assurez-vous de définir `stripe_public_key` dans votre contrôleur
+
+                                        document.getElementById('checkout-button').addEventListener('click', function () {
+                                            fetch('{{ path('app_create_checkout_session') }}', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                            })
+                                                .then(function (response) {
+                                                    return response.json();
+                                                })
+                                                .then(function (session) {
+                                                    return stripe.redirectToCheckout({ sessionId: session.id });
+                                                })
+                                                .then(function (result) {
+                                                    if (result.error) {
+                                                        alert(result.error.message);
+                                                    }
+                                                })
+                                                .catch(function (error) {
+                                                    console.error('Error:', error);
+                                                });
+                                        });
+                                    </script>
+
                                 </div>
                                 <div class="text-slate-900 font-medium mb-3">Inclus :</div>
                                 <ul class="text-slate-600 text-sm space-y-3 grow">
@@ -204,6 +232,5 @@
                         </div>
 
                     </div>
-
                 </div>
 {% endblock %}

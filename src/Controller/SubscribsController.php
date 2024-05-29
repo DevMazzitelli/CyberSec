@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface; // Import correct
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route; // Utiliser Annotation\Route pour les annotations de route
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security; // Import correct pour Security
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted; // Import correct pour IsGranted
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SubscribsController extends AbstractController
 {
@@ -28,6 +28,7 @@ class SubscribsController extends AbstractController
     {
         return $this->render('subscribs/index.html.twig', [
             'controller_name' => 'SubscribsController',
+            'stripe_public_key' => $_ENV['STRIPE_PUBLIC_KEY'],
         ]);
     }
 
