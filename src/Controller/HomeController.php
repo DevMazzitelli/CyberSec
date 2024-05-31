@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
+use App\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(MessageRepository $messageRepository): Response
     {
+        // Récupère la première annonce
+        $message = $messageRepository->findOneBy([]);
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'annonce' => $message ? $message->getAnnonce() : 'Aucune annonce disponible',
         ]);
     }
 
@@ -23,5 +28,4 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
-
 }

@@ -15,14 +15,26 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
-        $error = $authenticationUtils->getLastAuthenticationError();
+        // Get the last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        // Find the user by email
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $lastUsername]);
 
+        // Check if the user exists and is verified
+        if ($user && !$user->isVerified()) {
+            // Redirect user to a page indicating that their email is not verified
+            return $this->redirectToRoute('app_home');
+        }
 
-        return $this->render('security/login.html.twig',
-            ['last_username' => $lastUsername, 'error' => $error]);
+        // Get the login error, if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // Render the login form with necessary data
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error
+        ]);
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
@@ -32,6 +44,3 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
-
-
-
