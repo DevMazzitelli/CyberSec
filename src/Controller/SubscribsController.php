@@ -178,5 +178,72 @@ class SubscribsController extends AbstractController
 
         return $this->render('subscribs/cancel.html.twig');
     }
+
+    /**
+     * @Route("/subscription/cancel", name="subscription_cancel")
+     */
+    public function cancelSubscription(): Response
+    {
+        $user = $this->getUser();
+        $subscription = $this->em->getRepository(Subscription::class)->findOneBy(['user' => $user]);
+
+        if (!$subscription) {
+            return $this->redirectToRoute('home'); // ou autre page de votre choix
+        }
+
+        Stripe::setApiKey($this->getParameter('stripe_secret_key'));
+
+        $stripeSubscription = StripeSubscription::retrieve($subscription->getStripeSubscriptionId());
+        $stripeSubscription->cancel();
+
+        $subscription->setStatus('canceled');
+        $this->em->flush();
+
+        return $this->redirectToRoute('subscription_status'); // ou autre page de votre choix
+    }
+
+
+
+    /**
+     * @Route("/subscription/change", name="subscription_change")
+     */
+    public function changeSubscription(Request $request): Response
+    {
+        $user = $this->getUser();
+        $newPlan = $request->query->get('plan'); // ou via POST
+
+        $subscription = $this->em->getRepository(Subscription::class)->findOneBy(['user' => $user]);
+
+        if (!$subscription) {
+            return $this->redirectToRoute('home'); // ou autre page de votre choix
+        }
+
+        Stripe::setApiKey($this->getParameter('stripe_secret_key'));
+
+        $stripeSubscription = StripeSubscription::retrieve($subscription->getStripeSubscriptionId());
+        $stripeSubscription->items = [
+            [
+                'id' => $stripeSubscription->items->data[0]->id,
+                'price' => $newPlan,
+            ],
+        ];
+        $stripeSubscription->save();
+
+        $subscription->setPlan($newPlan);
+        $this->em->flush();
+
+        return $this->redirectToRoute('subscription_status'); // ou autre page de votre choix
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
 

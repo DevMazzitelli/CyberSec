@@ -1,5 +1,7 @@
 <?php
 
+// src/Entity/User.php
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -7,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -23,15 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
     private ?string $password = null;
 
@@ -47,8 +42,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profilePicture = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $is_sub = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adresse = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ville = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pays = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $codePostal = null;
 
     public function getId(): ?int
     {
@@ -67,31 +74,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     *
-     * @return list<string>
-     */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-
-        return array_unique($roles);
+        return array_unique($this->roles);
     }
 
-    /**
-     * @param list<string> $roles
-     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -99,14 +91,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
     }
-
 
     public function setPassword(string $password): static
     {
@@ -115,13 +103,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Clear temporary, sensitive data here
     }
 
     public function isVerified(): bool
@@ -134,26 +118,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
 
         return $this;
-    }
-
-    public function editProfile(request $request)
-    {
-        $email = $this->getEmail();
-        $form = $this->createForm(EditProfileType::class, $email);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($email);
-            $em->flush();
-
-            $this->addFlash('message', 'Profil mis à jour');
-            return $this->redirectToRoute('email');
-        }
-
-        return $this->render('user/modification.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     public function getFirstname(): ?string
@@ -192,20 +156,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isSub(): ?bool
+    public function getIsSub(): ?bool
     {
         return $this->is_sub;
     }
 
-    public function setSub(bool $is_sub): static
+    public function setIsSub(?bool $is_sub): static
     {
         $this->is_sub = $is_sub;
 
         return $this;
     }
 
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
 
+    public function setAdresse(?string $adresse): static
+    {
+        $this->adresse = $adresse;
 
+        return $this;
+    }
 
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
 
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?string $pays): static
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
 }
