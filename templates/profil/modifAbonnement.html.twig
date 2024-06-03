@@ -1,0 +1,17 @@
+{# templates/profil/modifAbonnement.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de l'abonnement{% endblock %}
+
+{% block body %}
+
+    <div style="padding-top: 20px;">
+        <h2>Résilier mon abonnement</h2>
+        {{ form_start(modificationProfil) }}
+        {{ form_row(modificationProfil.is_sub) }}
+        <button type="submit" class="btn btn-danger">Enregistrer les modifications</button>
+        {{ form_end(modificationProfil) }}
+    </div>
+
+{% endblock %}
