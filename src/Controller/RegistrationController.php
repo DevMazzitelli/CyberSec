@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -57,22 +57,35 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserEmail(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
+            // Get the user ID from the request parameters
+            $userId = $request->query->get('id');
+
+            // Find the user by ID
+            $user = $entityManager->getRepository(User::class)->find($userId);
+
+            // Check if the user exists
+            if (!$user) {
+                throw new \Exception('User not found');
+            }
+
+            // Set is_verified to true
+            $user->setVerified(true);
+
+            // Persist the changes
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Your email address has been verified.');
+
+            return $this->redirectToRoute('app_home');
+        } catch (\Exception $exception) {
+            $this->addFlash('verify_email_error', $exception->getMessage());
 
             return $this->redirectToRoute('app_register');
         }
-
-        // @TODO Change the redirect on success.html.twig and handle or remove the flash message in your templates
-        $this->addFlash('success.html.twig', 'Your email address has been verified.');
-
-        return $this->redirectToRoute('app_register');
     }
+
 }

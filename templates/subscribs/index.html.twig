@@ -38,21 +38,24 @@
                                     <span class="text-slate-500 font-medium">/mo</span>
                                 </div>
                                 <div class="text-sm text-slate-500 mb-5">Profitez d'un accès de base à notre plateforme avec des fonctionnalités essentielles pour démarrer votre expérience.</div>
-                                <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" id="checkout-button" href="javascript:void(0)">
+                                <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" id="checkout-button-1" href="javascript:void(0)">
                                     Obtenez l'abonnement Essentiel
                                 </a>
 
                                 <script type="text/javascript">
                                     var stripe = Stripe('{{ stripe_public_key }}');
 
-                                    document.getElementById('checkout-button').addEventListener('click', function () {
-                                        fetch('{{ path('app_abonnementUn') }}', {
+                                    function createCheckoutSession(url) {
+                                        return fetch(url, {
                                             method: 'POST',
                                             headers: {
                                                 'Content-Type': 'application/json',
                                             },
                                         })
                                             .then(function (response) {
+                                                if (!response.ok) {
+                                                    throw new Error('Network response was not ok ' + response.statusText);
+                                                }
                                                 return response.json();
                                             })
                                             .then(function (session) {
@@ -65,7 +68,20 @@
                                             })
                                             .catch(function (error) {
                                                 console.error('Error:', error);
+                                                alert('An error occurred. Please try again.');
                                             });
+                                    }
+
+                                    document.getElementById('checkout-button-1').addEventListener('click', function () {
+                                        createCheckoutSession('/abonnement_Un');
+                                    });
+
+                                    document.getElementById('checkout-button-2').addEventListener('click', function () {
+                                        createCheckoutSession('/abonnement_Deux');
+                                    });
+
+                                    document.getElementById('checkout-button-3').addEventListener('click', function () {
+                                        createCheckoutSession('/abonnement_Trois');
                                     });
                                 </script>
 
@@ -117,7 +133,7 @@
                                     <span class="text-slate-500 font-medium">/mo</span>
                                 </div>
                                 <div class="text-sm text-slate-500 mb-5">Obtenez un accès exclusif à des fonctionnalités avancées et à du contenu premium pour améliorer votre expérience utilisateur.</div>
-                                <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" href="#0">
+                                <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" id="checkout-button-2" href="javascript:void(0)">
                                     Obtenez l'abonnement Avancé
                                 </a>
                             </div>
@@ -173,7 +189,7 @@
                                     <span class="text-slate-500 font-medium">/mo</span>
                                 </div>
                                 <div class="text-sm text-slate-500 mb-5">Accédez à notre offre la plus complète avec un ensemble complet de fonctionnalités avancées et des avantages exclusifs.</div>
-                                <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" href="#0">
+                                <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" id="checkout-button-3" href="javascript:void(0)">
                                     Obtenez l'abonnement Prestige
                                 </a>
                             </div>

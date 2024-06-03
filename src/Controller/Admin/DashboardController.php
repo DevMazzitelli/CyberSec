@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Message;
 use App\Entity\Contact;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,6 +43,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Message');
         // Ajout du lien vers le dashboard "Contact"
         yield MenuItem::linkToCrud('Contacts', 'fa fa-address-book', Contact::class);
+
+        yield MenuItem::section('Annonce');
+        // Ajout du lien vers le dashboard "Message"
+        yield MenuItem::linkToCrud('Message', 'fa fa-bell', Message::class);
 
 
 

@@ -74,6 +74,89 @@ class SubscribsController extends AbstractController
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
+    #[Route('/abonnement_Deux', name: 'app_abonnementDeux')]
+    public function createCheckoutSession2(Request $request)
+    {
+        try {
+            // On initialise notre clef stripe
+            \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+            // On récupère l'utilisateur
+            $user = $this->getUser();
+
+            // Création de notre checkout session
+            $session = \Stripe\Checkout\Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Abonnement Deux'
+                        ],
+                        // On met le prix en centimes donc *100
+                        'unit_amount' => 1499,
+                        'recurring' => [
+                            'interval' => 'month'
+                        ],
+                    ],
+                    'quantity' => 1,
+                ]],
+                'mode' => 'subscription',
+                'success_url' => $this->generateUrl('payment_success', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'metadata' => [
+                    'user_id' => $user->getId(),
+                ],
+            ]);
+
+            return new JsonResponse(['id' => $session->id]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            return new Response($e->getMessage(), 400);
+        }
+    }
+
+
+    #[IsGranted("IS_AUTHENTICATED_FULLY")]
+    #[Route('/abonnement_Trois', name: 'app_abonnementTrois')]
+    public function createCheckoutSession3(Request $request)
+    {
+        try {
+            // On initialise notre clef stripe
+            \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+            // On récupère l'utilisateur
+            $user = $this->getUser();
+
+            // Création de notre checkout session
+            $session = \Stripe\Checkout\Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Abonnement Trois'
+                        ],
+                        // On met le prix en centimes donc *100
+                        'unit_amount' => 2999,
+                        'recurring' => [
+                            'interval' => 'month'
+                        ],
+                    ],
+                    'quantity' => 1,
+                ]],
+                'mode' => 'subscription',
+                'success_url' => $this->generateUrl('payment_success', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'metadata' => [
+                    'user_id' => $user->getId(),
+                ],
+            ]);
+
+            return new JsonResponse(['id' => $session->id]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            return new Response($e->getMessage(), 400);
+        }
+    }
+
+    #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/payment-success', name: 'payment_success')]
     public function paymentSuccess()
     {
