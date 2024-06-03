@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -12,6 +14,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    private $security;
+
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
+    {
+        $this->security = $security;
+    }
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
@@ -42,5 +50,12 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    // Vérification de la connexion de l'utilisateur
+    #[Route('/check-login', name: 'app_check_login')]
+    public function checkLogin()
+    {
+        return new JsonResponse(['isLoggedIn' => $this->security->isGranted('IS_AUTHENTICATED_FULLY')]);
     }
 }

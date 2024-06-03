@@ -33,9 +33,15 @@ class SubscribsController extends AbstractController
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
-    #[Route('/abonnement_Un', name: 'app_abonnementUn')]
+    #[Route('/create_checkout-session', name: 'app_create_checkout_abonnement_un')]
     public function createCheckoutSession(Request $request)
     {
+        // Vérifie si l'utilisateur est connecté
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
+            return $this->redirectToRoute('app_login');
+        }
+
         try {
             // On initialise notre clef stripe
             \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
@@ -74,9 +80,15 @@ class SubscribsController extends AbstractController
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
-    #[Route('/abonnement_Deux', name: 'app_abonnementDeux')]
-    public function createCheckoutSession2(Request $request)
+    #[Route('/create_checkout-session-deux', name: 'app_create_checkout_abonnement_deux')]
+    public function createCheckoutSessionDeux(Request $request)
     {
+        // Vérifie si l'utilisateur est connecté
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
+            return $this->redirectToRoute('app_login');
+        }
+
         try {
             // On initialise notre clef stripe
             \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
@@ -114,11 +126,16 @@ class SubscribsController extends AbstractController
         }
     }
 
-
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
-    #[Route('/abonnement_Trois', name: 'app_abonnementTrois')]
-    public function createCheckoutSession3(Request $request)
+    #[Route('/create_checkout-session-trois', name: 'app_create_checkout_abonnement_trois')]
+    public function createCheckoutSessionTrois(Request $request)
     {
+        // Vérifie si l'utilisateur est connecté
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
+            return $this->redirectToRoute('app_login');
+        }
+
         try {
             // On initialise notre clef stripe
             \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
