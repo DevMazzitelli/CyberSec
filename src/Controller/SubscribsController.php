@@ -254,6 +254,8 @@ class SubscribsController extends AbstractController
         return $this->render('subscribs/cancel.html.twig');
     }
 
+    #[IsGranted("IS_AUTHENTICATED_FULLY")]
+
     #[Route('/unsubscribe', name: 'app_unsubscribe')]
     public function unsubscribe(): Response
     {
