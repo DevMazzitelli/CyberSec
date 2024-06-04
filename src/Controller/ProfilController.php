@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/ProfilController.php
-
 namespace App\Controller;
 
 use App\Form\UserModificationType;
@@ -87,27 +85,23 @@ class ProfilController extends AbstractController
                     $subscription = Subscription::retrieve($subscriptionId);
                     $subscription->cancel();
 
-                    // Persister les modifications dans votre base de données
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-
                 } catch (ApiErrorException $e) {
                     // Gérer les erreurs de Stripe
                     $this->addFlash('error', 'Erreur lors de la résiliation de l\'abonnement : ' . $e->getMessage());
                 } catch (\Exception $e) {
                     // Gérer les autres erreurs
-                    $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
+                    $this->addFlash('error', 'Une erreur inattendue est survenue : ' . $e->getMessage());
                 }
-            } else {
-                // Persister les modifications dans votre base de données si nécessaire
-                $entityManager->persist($user);
-                $entityManager->flush();
             }
 
-            return $this->redirectToRoute('app_home');
+            // Mettre à jour l'utilisateur dans la base de données
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_profile');
         }
 
-        return $this->render('profil/modifAbonnement.html.twig', [
+        return $this->render('profil/modification_abonnement.html.twig', [
             'modificationProfil' => $form->createView(),
         ]);
     }
