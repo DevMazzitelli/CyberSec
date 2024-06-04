@@ -42,23 +42,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profilePicture = null;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
-    private ?bool $is_sub = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $adresse = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $ville = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $pays = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $codePostal = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $stripeSubscriptionId = null;
+    #[ORM\Column]
+    private ?int $isSub = null;
 
     public function getId(): ?int
     {
@@ -159,75 +144,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getIsSub(): ?bool
+    public function getIsSub(): ?int
     {
-        return $this->is_sub;
+        return $this->isSub;
     }
 
-    public function setIsSub(?bool $is_sub): static
+    public function setIsSub(int $isSub): static
     {
-        $this->is_sub = $is_sub;
+        $this->isSub = $isSub;
 
         return $this;
     }
 
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?string $adresse): static
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(?string $ville): static
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getPays(): ?string
-    {
-        return $this->pays;
-    }
-
-    public function setPays(?string $pays): static
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
-
-    public function getCodePostal(): ?string
-    {
-        return $this->codePostal;
-    }
-
-    public function setCodePostal(?string $codePostal): static
-    {
-        $this->codePostal = $codePostal;
-
-        return $this;
-    }
-
-    public function getStripeSubscriptionId(): ?string
-    {
-        return $this->stripeSubscriptionId;
-    }
-
-    public function setStripeSubscriptionId(?string $stripeSubscriptionId): static
-    {
-        $this->stripeSubscriptionId = $stripeSubscriptionId;
-
-        return $this;
-    }
 }

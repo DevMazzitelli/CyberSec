@@ -66,7 +66,7 @@ class SubscribsController extends AbstractController
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $this->generateUrl('payment_success', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'success_url' => $this->generateUrl('payment_success_abonnement_un', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'metadata' => [
                     'user_id' => $user->getId(),
@@ -113,7 +113,7 @@ class SubscribsController extends AbstractController
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $this->generateUrl('payment_success', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'success_url' => $this->generateUrl('payment_success_abonnement_deux', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'metadata' => [
                     'user_id' => $user->getId(),
@@ -160,7 +160,7 @@ class SubscribsController extends AbstractController
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $this->generateUrl('payment_success', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'success_url' => $this->generateUrl('payment_success_abonnement_trois', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'metadata' => [
                     'user_id' => $user->getId(),
@@ -174,14 +174,44 @@ class SubscribsController extends AbstractController
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
-    #[Route('/payment-success', name: 'payment_success')]
-    public function paymentSuccess()
+    #[Route('/payment-success-abonnement-un', name: 'payment_success_abonnement_un')]
+    public function paymentSuccessAbonnementUn()
     {
         // Récupère notre utilisateur
         $user = $this->getUser();
 
         // On va changer son abonnement de is_sub à true.
-        $user->setSub(true);
+        $user->setIsSub(1);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $this->render('subscribs/success.html.twig');
+    }
+
+    #[IsGranted("IS_AUTHENTICATED_FULLY")]
+    #[Route('/payment-success-abonnement-deux', name: 'payment_success_abonnement_deux')]
+    public function paymentSuccessAbonnementDeux()
+    {
+        // Récupère notre utilisateur
+        $user = $this->getUser();
+
+        // On va changer son abonnement de is_sub à true.
+        $user->setIsSub(2);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $this->render('subscribs/success.html.twig');
+    }
+
+    #[IsGranted("IS_AUTHENTICATED_FULLY")]
+    #[Route('/payment-success-abonnement-trois', name: 'payment_success_abonnement_trois')]
+    public function paymentSuccessTrois()
+    {
+        // Récupère notre utilisateur
+        $user = $this->getUser();
+
+        // On va changer son abonnement de is_sub à true.
+        $user->setIsSub(3);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
@@ -196,71 +226,18 @@ class SubscribsController extends AbstractController
         return $this->render('subscribs/cancel.html.twig');
     }
 
-    /**
-     * @Route("/subscription/cancel", name="subscription_cancel")
-     */
+    #[Route('/cancel-subscription', name: 'cancel_subscription')]
     public function cancelSubscription(): Response
     {
+        // Supprimer l'abonnement de l'utilisateur sur son compte.
+
         $user = $this->getUser();
-        $subscription = $this->em->getRepository(Subscription::class)->findOneBy(['user' => $user]);
 
-        if (!$subscription) {
-            return $this->redirectToRoute('home'); // ou autre page de votre choix
-        }
+        // On récupère l'abonnement de l'utilisateur
+        $user = $this->getUser()->IsSub();
 
-        Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-
-        $stripeSubscription = StripeSubscription::retrieve($subscription->getStripeSubscriptionId());
-        $stripeSubscription->cancel();
-
-        $subscription->setStatus('canceled');
-        $this->em->flush();
-
-        return $this->redirectToRoute('subscription_status'); // ou autre page de votre choix
+        return $this->redirectToRoute('app_abonnement'); // ou autre page de votre choix
     }
-
-
-
-    /**
-     * @Route("/subscription/change", name="subscription_change")
-     */
-    public function changeSubscription(Request $request): Response
-    {
-        $user = $this->getUser();
-        $newPlan = $request->query->get('plan'); // ou via POST
-
-        $subscription = $this->em->getRepository(Subscription::class)->findOneBy(['user' => $user]);
-
-        if (!$subscription) {
-            return $this->redirectToRoute('home'); // ou autre page de votre choix
-        }
-
-        Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-
-        $stripeSubscription = StripeSubscription::retrieve($subscription->getStripeSubscriptionId());
-        $stripeSubscription->items = [
-            [
-                'id' => $stripeSubscription->items->data[0]->id,
-                'price' => $newPlan,
-            ],
-        ];
-        $stripeSubscription->save();
-
-        $subscription->setPlan($newPlan);
-        $this->em->flush();
-
-        return $this->redirectToRoute('subscription_status'); // ou autre page de votre choix
-    }
-
-
-
-
-
-
-
-
-
-
 
 }
 
