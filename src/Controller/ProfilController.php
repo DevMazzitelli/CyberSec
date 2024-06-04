@@ -64,45 +64,9 @@ class ProfilController extends AbstractController
         EntityManagerInterface $entityManager,
         Request $request
     ): Response {
-        $user = $this->getUser();
-        $form = $this->createForm(EditSubscribsType::class, $user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Si la case est cochée, la valeur de is_sub doit être mise à false pour résilier l'abonnement
-            if ($form->get('is_sub')->getData()) {
-                $user->setIsSub(false);
-
-                // Initialiser la bibliothèque Stripe avec votre clé secrète
-                Stripe::setApiKey('votre_cle_secrete_stripe');
-
-                // L'utilisateur peut se désabonner
-                try {
-                    // Récupérer l'ID de l'abonnement Stripe de l'utilisateur
-                    $subscriptionId = $user->getStripeSubscriptionId();
-
-                    // Annuler l'abonnement sur Stripe
-                    $subscription = Subscription::retrieve($subscriptionId);
-                    $subscription->cancel();
-
-                } catch (ApiErrorException $e) {
-                    // Gérer les erreurs de Stripe
-                    $this->addFlash('error', 'Erreur lors de la résiliation de l\'abonnement : ' . $e->getMessage());
-                } catch (\Exception $e) {
-                    // Gérer les autres erreurs
-                    $this->addFlash('error', 'Une erreur inattendue est survenue : ' . $e->getMessage());
-                }
-            }
-
-            // Mettre à jour l'utilisateur dans la base de données
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_profile');
-        }
 
         return $this->render('profil/modification_abonnement.html.twig', [
-            'modificationProfil' => $form->createView(),
         ]);
     }
 }

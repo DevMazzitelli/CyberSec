@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Stripe\Webhook;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -66,7 +68,7 @@ class SubscribsController extends AbstractController
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $this->generateUrl('payment_success_abonnement_un', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'success_url' => $this->generateUrl('payment_success_abonnement_un', ['session_id' => '{CHECKOUT_SESSION_ID}'], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'metadata' => [
                     'user_id' => $user->getId(),
@@ -113,7 +115,7 @@ class SubscribsController extends AbstractController
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $this->generateUrl('payment_success_abonnement_deux', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'success_url' => $this->generateUrl('payment_success_abonnement_deux', ['session_id' => '{CHECKOUT_SESSION_ID}'], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'metadata' => [
                     'user_id' => $user->getId(),
@@ -160,7 +162,7 @@ class SubscribsController extends AbstractController
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $this->generateUrl('payment_success_abonnement_trois', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'success_url' => $this->generateUrl('payment_success_abonnement_trois', ['session_id' => '{CHECKOUT_SESSION_ID}'], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'metadata' => [
                     'user_id' => $user->getId(),
@@ -175,13 +177,23 @@ class SubscribsController extends AbstractController
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/payment-success-abonnement-un', name: 'payment_success_abonnement_un')]
-    public function paymentSuccessAbonnementUn()
+    public function paymentSuccessAbonnementUn(Request $request)
     {
         // Récupère notre utilisateur
         $user = $this->getUser();
 
         // On va changer son abonnement de is_sub à true.
         $user->setIsSub(1);
+
+        // On met la date actuel + 30 jours à is_sub_time_end
+        $date = new \DateTime();
+        $date->modify('+30 days');
+        $user->setIsSubTimeEnd($date);
+        $user->setIsSubTimeEnd2(null);
+        $user->setIsSubTimeEnd3(null);
+
+        // Stocker l'ID de l'abonnement Stripe dans l'utilisateur
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
@@ -197,6 +209,13 @@ class SubscribsController extends AbstractController
 
         // On va changer son abonnement de is_sub à true.
         $user->setIsSub(2);
+
+        // On met la date actuel + 30 jours à is_sub_time_end
+        $date = new \DateTime();
+        $date->modify('+30 days');
+        $user->setIsSubTimeEnd2($date);
+        $user->setIsSubTimeEnd3(null);
+        $user->setIsSubTimeEnd(null);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
@@ -212,6 +231,15 @@ class SubscribsController extends AbstractController
 
         // On va changer son abonnement de is_sub à true.
         $user->setIsSub(3);
+
+        // On met la date actuel + 30 jours à is_sub_time_end
+        $date = new \DateTime();
+        $date->modify('+30 days');
+        $user->setIsSubTimeEnd3($date);
+        // On enlève les dates de setIsSubTimeEnd et setIsSubTimeEnd2
+        $user->setIsSubTimeEnd(null);
+        $user->setIsSubTimeEnd2(null);
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
@@ -226,18 +254,78 @@ class SubscribsController extends AbstractController
         return $this->render('subscribs/cancel.html.twig');
     }
 
-    #[Route('/cancel-subscription', name: 'cancel_subscription')]
-    public function cancelSubscription(): Response
+    #[Route('/unsubscribe', name: 'app_unsubscribe')]
+    public function unsubscribe(): Response
     {
-        // Supprimer l'abonnement de l'utilisateur sur son compte.
-
+        // Récupère notre utilisateur
         $user = $this->getUser();
 
-        // On récupère l'abonnement de l'utilisateur
-        $user = $this->getUser()->IsSub();
+        // On va changer son abonnement de is_sub à 0.
+        $user->setIsSub(0);
 
-        return $this->redirectToRoute('app_abonnement'); // ou autre page de votre choix
+        // Annuler l'abonnement côté Stripe
+        \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+        $subscription = \Stripe\Subscription::retrieve($user->getStripeSubscriptionId());
+        $subscription->cancel();
+
+        // Supprimer l'ID de l'abonnement Stripe de l'utilisateur
+        $user->setStripeSubscriptionId(null);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        // Redirige vers une page de succès
+        return $this->redirectToRoute('app_profile');
     }
 
-}
+    #[Route('/webhook/payment/cancelled', name: 'webhook_cancel', methods: ['DELETE'])]
+    public function handleWebhookCancelled(Request $request): Response
+    {
+        $payload = json_decode($request->getContent(), true);
 
+        if ($payload['type'] === 'checkout.session.cancelled') {
+            $session = $payload['data']['object'];
+
+            // Récupérer l'ID de l'utilisateur à partir des métadonnées de la session de paiement
+            $userId = $session['metadata']['user_id'];
+
+            // Récupérer l'utilisateur à partir de l'ID
+            $user = $this->entityManager->getRepository(User::class)->find($userId);
+
+            // Mettre à jour l'abonnement de l'utilisateur dans votre base de données
+            $user->setIsSub(0);
+            $user->setStripeSubscriptionId(null);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
+
+        return new Response('Received event', 200);
+    }
+
+    #[Route('/webhook/payment/succeeded', name: 'webhook_success', methods: ['POST'])]
+    public function handleWebhook(Request $request): Response
+    {
+        $payload = json_decode($request->getContent(), true);
+
+        if ($payload['type'] === 'checkout.session.completed') {
+            $session = $payload['data']['object'];
+
+            // Récupérer l'ID de l'utilisateur à partir des métadonnées de la session de paiement
+            $userId = $session['metadata']['user_id'];
+
+            // Récupérer l'utilisateur à partir de l'ID
+            $user = $this->entityManager->getRepository(User::class)->find($userId);
+
+            // Récupérer l'ID de l'abonnement à partir de la session
+            $stripeSubscriptionId = $session['subscription'];
+
+            // Mettre à jour l'abonnement de l'utilisateur dans votre base de données
+            $user->setIsSub(1);
+            $user->setStripeSubscriptionId($stripeSubscriptionId);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
+
+        return new Response('Received event', 200);
+    }
+}

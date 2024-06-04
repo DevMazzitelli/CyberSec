@@ -5,6 +5,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -44,6 +45,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?int $isSub = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $StripeSubscriptionId = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $is_sub_time_end = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $is_sub_time_end_2 = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $is_sub_time_end_3 = null;
 
     public function getId(): ?int
     {
@@ -152,6 +165,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsSub(int $isSub): static
     {
         $this->isSub = $isSub;
+
+        return $this;
+    }
+
+    public function getStripeSubscriptionId(): ?string
+    {
+        return $this->StripeSubscriptionId;
+    }
+
+    public function setStripeSubscriptionId(?string $StripeSubscriptionId): static
+    {
+        $this->StripeSubscriptionId = $StripeSubscriptionId;
+
+        return $this;
+    }
+
+    public function getIsSubTimeEnd(): ?\DateTimeInterface
+    {
+        return $this->is_sub_time_end;
+    }
+
+    public function setIsSubTimeEnd(?\DateTimeInterface $is_sub_time_end): static
+    {
+        $this->is_sub_time_end = $is_sub_time_end;
+
+        return $this;
+    }
+
+    public function getIsSubTimeEnd2(): ?\DateTimeInterface
+    {
+        return $this->is_sub_time_end_2;
+    }
+
+    public function setIsSubTimeEnd2(?\DateTimeInterface $is_sub_time_end_2): static
+    {
+        $this->is_sub_time_end_2 = $is_sub_time_end_2;
+
+        return $this;
+    }
+
+    public function getIsSubTimeEnd3(): ?\DateTimeInterface
+    {
+        return $this->is_sub_time_end_3;
+    }
+
+    public function setIsSubTimeEnd3(?\DateTimeInterface $is_sub_time_end_3): static
+    {
+        $this->is_sub_time_end_3 = $is_sub_time_end_3;
 
         return $this;
     }
