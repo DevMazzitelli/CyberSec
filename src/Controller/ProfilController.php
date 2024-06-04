@@ -61,10 +61,7 @@ class ProfilController extends AbstractController
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/profil/modification_abonnement', name: 'app_profil_modifabonnement')]
     public function modifAbonnement(
-        EntityManagerInterface $entityManager,
-        Request $request
     ): Response {
-
 
         return $this->render('profil/modification_abonnement.html.twig', [
         ]);
