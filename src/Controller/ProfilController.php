@@ -106,7 +106,7 @@ class ProfilController extends AbstractController
             $entityManager->flush();
 
             // Redirection
-            $this->addFlash('notification', 'Votre adresse a bien été enregistrée');
+            $this->addFlash('success', 'Votre adresse a bien été enregistrée');
             return $this->redirectToRoute('app_abonnement');
         }
 
