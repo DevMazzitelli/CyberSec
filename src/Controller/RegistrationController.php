@@ -37,22 +37,8 @@ class RegistrationController extends AbstractController
                 ->setRoles(['ROLE_USER'])
                 ->setIsSub(false);
 
-            // Create a new instance of Address
-            $address = new Address();
-            $address->setRue($form->get('address')->get('rue')->getData())
-                ->setVille($form->get('address')->get('ville')->getData())
-                ->setPays($form->get('address')->get('pays')->getData())
-                ->setCodePostal($form->get('address')->get('codePostal')->getData())
-                ->setAdresse($form->get('address')->get('adresse')->getData())
-                ->setTest($form->get('address')->get('test')->getData());
-
-            // Set the user for the address and vice versa
-            $address->setUser($user);
-            $user->addAddress($address);
-
             // Persist and flush the entities
             $entityManager->persist($user);
-            $entityManager->persist($address);
             $entityManager->flush();
 
             // Send confirmation email
@@ -60,7 +46,7 @@ class RegistrationController extends AbstractController
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
-                    ->from(new Address('contact@cybersec.com', 'CyberSec'))
+                    ->from('cybersec@gmail.com') // Adresse mail de TOI
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')

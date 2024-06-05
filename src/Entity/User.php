@@ -17,10 +17,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'Peut être que cette adresse existe déjà ? Essayer une autre adresse.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public function __construct()
-    {
-        $this->addresses = new ArrayCollection();
-    }
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -51,9 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $isSub = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Address::class, cascade: ['persist'])]
-    private Collection $addresses;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $StripeSubscriptionId = null;
 
@@ -65,6 +58,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $is_sub_time_end_3 = null;
+
+    #[ORM\OneToOne(targetEntity: Address::class, cascade: ["persist", "remove"])]
+    private $address;
 
     public function getId(): ?int
     {
@@ -225,31 +221,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAddresses(): Collection
+    public function getAddress(): ?Address
     {
-        return $this->addresses;
+        return $this->address;
     }
 
-    public function addAddress(Address $address): static
+    public function setAddress(?Address $address): self
     {
-        if (!$this->addresses->contains($address)) {
-            $this->addresses->add($address);
-            $address->setUser($this);
-        }
+        $this->address = $address;
 
         return $this;
     }
-
-    public function removeAddress(Address $address): static
-    {
-        if ($this->addresses->removeElement($address)) {
-            // set the owning side to null (unless already changed)
-            if ($address->getUser() === $this) {
-                $address->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

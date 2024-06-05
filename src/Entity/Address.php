@@ -31,11 +31,6 @@ class Address
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\Column(length: 255)]
-    private ?string $adresse = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $test = null;
 
     public function getId(): ?int
     {
@@ -86,30 +81,6 @@ class Address
     public function setCodePostal(string $codePostal): static
     {
         $this->codePostal = $codePostal;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): static
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getTest(): ?string
-    {
-        return $this->test;
-    }
-
-    public function setTest(string $test): static
-    {
-        $this->test = $test;
 
         return $this;
     }

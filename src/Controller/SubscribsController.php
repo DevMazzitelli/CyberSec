@@ -26,12 +26,12 @@ class SubscribsController extends AbstractController
     }
 
     #[Route('/abonnement', name: 'app_abonnement')]
-    public function index(): Response
+    public function index(Security $security): Response
     {
         return $this->render('subscribs/index.html.twig', [
             'controller_name' => 'SubscribsController',
             'stripe_public_key' => $_ENV['STRIPE_PUBLIC_KEY'],
-        ]);
+            ]);
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
@@ -255,7 +255,6 @@ class SubscribsController extends AbstractController
     }
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
-
     #[Route('/unsubscribe', name: 'app_unsubscribe')]
     public function unsubscribe(): Response
     {

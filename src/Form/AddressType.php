@@ -6,6 +6,7 @@ use App\Entity\Address;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,11 +19,9 @@ class AddressType extends AbstractType
             ->add('ville')
             ->add('pays')
             ->add('codePostal')
-            ->add('adresse')
-            ->add('test')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
+            ->add('submit', SubmitType::class, [
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn btn-primary'],
             ])
         ;
     }

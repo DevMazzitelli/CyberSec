@@ -35,9 +35,17 @@
                                     <span class="text-slate-500 font-medium">/mo</span>
                                 </div>
                                 <div class="text-sm text-slate-500 mb-5">Profitez d'un accès de base à notre plateforme avec des fonctionnalités essentielles pour démarrer votre expérience.</div>
-                                <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" id="checkout-button-abonnement-un" href="javascript:void(0)">
-                                    Obtenez l'abonnement Essentiel
-                                </a>
+
+                                {% if app.user and app.user.address %}
+                                    <a class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150" id="checkout-button-abonnement-un" href="javascript:void(0)">
+                                        Obtenez l'abonnement Avancé
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('app_profil_adresse') }}" class="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors duration-150">
+                                        AJOUT ADRESSE
+                                    </a>
+                                {% endif %}
+
                             </div>
                             <div class="text-slate-900 font-medium mb-3">Inclus :</div>
                             <ul class="text-slate-600 text-sm space-y-3 grow">
