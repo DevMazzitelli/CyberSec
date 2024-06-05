@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
 {
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,6 +30,13 @@ class Address
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'addresses')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
+
+    #[ORM\Column(length: 255)]
+    private ?string $adresse = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $test = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +86,42 @@ class Address
     public function setCodePostal(string $codePostal): static
     {
         $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): static
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getTest(): ?string
+    {
+        return $this->test;
+    }
+
+    public function setTest(string $test): static
+    {
+        $this->test = $test;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

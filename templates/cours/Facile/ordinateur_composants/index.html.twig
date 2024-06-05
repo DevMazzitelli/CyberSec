@@ -3,6 +3,7 @@
 {% block title %}Cours{% endblock %}
 
 {% block body %}
+
     <section class="bg-fond text-white">
         <div class="max-w-4xl mx-auto p-6">
             <header class="mb-8 text-center">
@@ -66,6 +67,9 @@
                 <h3 class="text-xl font-semibold mb-2 mt-4">Comparaison AMD et Intel</h3>
                 <p>Pour voir les informations sur son processeur, il existe plusieurs méthodes :</p>
 
+
+
+
                 <h4 class="text-lg font-semibold mb-2 mt-4">Sur Windows :</h4>
                 <ul class="list-disc list-inside">
                     <li>Gestionnaire des tâches</li>
@@ -82,32 +86,22 @@
             </section>
         </div>
 
-        <div class="flex justify-center pb-5">
-            <a href="#" class="flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-                previous
-            </a>
 
-            <a href="#" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
-                1
-            </a>
 
-            <a href="#" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
-                2
-            </a>
-
-            <a href="#" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
-                3
-            </a>
-
-            <a href="#" class="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
-                Next
-            </a>
-        </div>
+        {{ include('re-use/pagination.html.twig') }}
 
 
 
 
     </section>
+
+
+
+
+
+
+
+
 
 
 {% endblock %}

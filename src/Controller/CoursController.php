@@ -8,6 +8,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
 
 class CoursController extends AbstractController
 {
@@ -89,7 +90,7 @@ class CoursController extends AbstractController
     }
 
     //cours/Facile/ordinateur_composants/index.html.twig
-    #[Route('/ordinateur&composants', name: 'app_cours_1_ordinateur_composants')]
+    #[Route('/ordinateur&composants/1', name: 'app_cours_1_ordinateur_composants')]
     public function index(): Response
     {
         $user = $this->security->getUser();
@@ -108,4 +109,54 @@ class CoursController extends AbstractController
             'controller_name' => 'CoursController',
         ]);
     }
+
+    #[Route('/ordinateur&composants/2', name: 'app_cours_2_ordinateur_composants')] // Changement de nom de route ici
+    public function index2(): Response
+    {
+        $user = $this->security->getUser();
+        // Récupère la date actuelle
+        $now = new \DateTime();
+
+        if (
+            (!$user->getIsSubTimeEnd() || $user->getIsSubTimeEnd() < $now) &&
+            (!$user->getIsSubTimeEnd2() || $user->getIsSubTimeEnd2() < $now) &&
+            (!$user->getIsSubTimeEnd3() || $user->getIsSubTimeEnd3() < $now)
+        ) {
+            return $this->redirectToRoute('app_abonnement');
+        }
+
+        return $this->render('cours/Facile/ordinateur_composants/partie2.html.twig', [
+            'controller_name' => 'CoursController',
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
