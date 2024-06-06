@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Orders;
 use App\Repository\OrdersRepository;
 use App\Repository\UserRepository;
+use App\Service\FactureService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,7 @@ class FactureController extends AbstractController
         Security $security,
         UserRepository $userRepository,
         OrdersRepository $ordersRepository,
+        FactureService $factureService,
         int $id_commande
     ): Response
     {
@@ -28,22 +30,6 @@ class FactureController extends AbstractController
         // Récupération de l'adresse lié à l'utilisateur
         $address = $infoUser->getAddress();
 
-        $htmlContent = $this->renderView('emails/facture/facture.html.twig', [
-            'infoUser' => $infoUser,
-            'order' => $order,
-            'address' => $address
-        ]);
-
-        $dompdf = new Dompdf(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true, 'isRemoteEnabled' => true]);
-        $dompdf->loadHtml($htmlContent);
-        $dompdf->setBasePath(realpath($this->getParameter('kernel.project_dir')).'/public');
-        $dompdf->render();
-
-        $response = new Response($dompdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="facture.pdf"'
-        ]);
-
-        return $response;
+        return $factureService->generatePdf($infoUser, $order, $address, $this->getParameter('kernel.project_dir'));
     }
 }

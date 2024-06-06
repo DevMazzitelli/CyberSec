@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Address;
+use App\Repository\OrdersRepository;
+use App\Repository\UserRepository;
+use App\Service\FactureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Webhook;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -185,7 +188,12 @@ class SubscribsController extends AbstractController
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/payment-success-abonnement-un', name: 'payment_success_abonnement_un')]
-    public function paymentSuccessAbonnementUn(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    public function paymentSuccessAbonnementUn(
+        MailerInterface $mailer,
+        UserRepository $userRepository,
+        OrdersRepository $ordersRepository,
+        FactureService $factureService
+    ): Response
     {
         // Récupère notre utilisateur
         $user = $this->getUser();
@@ -201,21 +209,28 @@ class SubscribsController extends AbstractController
         $user->setIsSubTimeEnd3(null);
 
         // Persist et flush l'utilisateur
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
-        // Envoie de l'email avec le pdf de la facture en cours.
-        $email = (new TemplatedEmail())
-            ->from('rayanasa77@gmail.com') // Remplacez par votre adresse e-mail
+        // Récupération de l'adresse lié à l'utilisateur
+        $address = $user->getAddress();
+
+        // Récupération de la commande lié à l'utilisateur
+        $order = $ordersRepository->findOneBy(['user' => $user], ['id' => 'DESC']);
+
+        // Génération du PDF
+        $pdfContent = $factureService->generatePdf($user, $order, $address, $this->getParameter('kernel.project_dir'));
+
+        // Création de l'e-mail
+        $email = (new Email())
+            ->from('cybersec@gmail.com')
             ->to($user->getEmail())
-            ->subject('Confirmation d\'abonnement')
-            ->htmlTemplate('emails/Confirmation_Abonnement/confirmation_abonnement.html.twig')
-            ->context([
-                'user' => $user,
-                'startDate' => new \DateTime(),
-                'endDate' => $date,
-            ]);
+            ->subject('Votre facture d\'abonnement')
+            ->text('Veuillez trouver ci-joint votre facture d\'abonnement.')
+            ->html('<p>Veuillez trouver ci-joint votre facture d\'abonnement.</p>')
+            ->attach($pdfContent, 'facture.pdf', 'application/pdf');
 
+        // Envoi de l'e-mail
         $mailer->send($email);
 
         return $this->render('subscribs/success.html.twig');
@@ -341,14 +356,23 @@ class SubscribsController extends AbstractController
     {
         $payload = json_decode($request->getContent(), true);
 
+        // Add this line to debug the payload
+        error_log(print_r($payload, true));
+
         if ($payload['type'] === 'checkout.session.completed') {
             $session = $payload['data']['object'];
+
+            // Add this line to debug the session
+            error_log(print_r($session, true));
 
             // Récupérer l'ID de l'utilisateur à partir des métadonnées de la session de paiement
             $userId = $session['metadata']['user_id'];
 
             // Récupérer l'utilisateur à partir de l'ID
             $user = $this->entityManager->getRepository(User::class)->find($userId);
+
+            // Add this line to debug the user
+            error_log(print_r($user, true));
 
             // Récupérer l'ID de l'abonnement à partir de la session
             $stripeSubscriptionId = $session['subscription'];

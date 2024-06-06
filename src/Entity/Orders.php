@@ -22,7 +22,7 @@ class Orders
     // Relation User & Adresse
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    private $users;
+    private $user;
 
     #[ORM\ManyToOne(targetEntity: Address::class, cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: true)]
@@ -76,7 +76,7 @@ class Orders
     // Méthode pour obtenir le prix en fonction de l'abonnement de l'utilisateur
     public function getPrice(): float
     {
-        $subscriptionType = $this->users->getIsSub();
+        $subscriptionType = $this->user->getIsSub();
         switch ($subscriptionType) {
             case 1: // Abonnement essentiel
                 return 6.99;
@@ -87,5 +87,17 @@ class Orders
             default:
                 return 0; // Par défaut, pas d'abonnement
         }
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
