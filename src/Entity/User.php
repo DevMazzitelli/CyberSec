@@ -62,6 +62,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: Address::class, cascade: ["persist", "remove"])]
     private $address;
 
+    // Prix des abonnements
+    const SUBSCRIPTION_PRICES = [
+        1 => 6.99,   // Essentiel: 6.99€
+        2 => 14.99,   // Avancé: 14.99€
+        3 => 29.99    // Prestige: 29.99€
+    ];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +178,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isSub = $isSub;
 
         return $this;
+    }
+
+    public function getSubscriptionType(): string
+    {
+        switch ($this->isSub) {
+            case 1:
+                return 'Essentiel';
+            case 2:
+                return 'Avancé';
+            case 3:
+                return 'Prestige';
+            default:
+                return 'Pas d\'abonnement';
+        }
+    }
+
+    public function getSubscriptionPrice(): ?float
+    {
+        return self::SUBSCRIPTION_PRICES[$this->isSub] ?? null;
     }
 
     public function getStripeSubscriptionId(): ?string

@@ -1,149 +1,154 @@
-
 <style>
-    .container {
-        max-width: 1000px;
-        margin: 0 auto;
-
-    }
-    .invoice-container {
-        border-radius: 30px;
-        background-color: #ffffff;
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f6;
         padding: 20px;
     }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
     .invoice-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 20px;
+        margin-bottom: 20px;
     }
+
     .invoice-header img {
         max-width: 150px;
     }
+
     .invoice-header h4 {
-        font-size: 1.25rem;
-        font-weight: 500;
-        text-transform: uppercase;
-    }
-    .invoice-info {
-        margin-top: 20px;
-    }
-    .project-name {
         font-size: 1.5rem;
         font-weight: 600;
         text-transform: uppercase;
+        margin: 0;
+    }
+
+    .invoice-info {
         margin-top: 20px;
     }
+
+    .project-name {
+        font-size: 1.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: 20px;
+        color: #333;
+    }
+
     .billing-address h4 {
         font-size: 1.25rem;
         font-weight: 500;
         text-transform: uppercase;
         margin-top: 20px;
+        margin-bottom: 10px;
+        color: #555;
     }
+
     .billing-address p {
-        width: 250px;
         font-size: 1rem;
         font-weight: normal;
-        margin-top: 10px;
+        margin: 0;
+        color: #777;
     }
+
     table {
         width: 100%;
         border-collapse: collapse;
-
-    }
-    th {
-        border-bottom: 1px solid #4b5563;
-        padding: 15px 10px;
-        text-align: center;
+        margin-top: 30px;
     }
 
-    td {
-        border-bottom: 1px solid #4b5563;
-        padding: 15px 10px;
-        text-align: center;
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        text-align: left;
     }
+
     th {
-        background-color: #000000;
-        color: #ffffff;
+        background-color: #000;
+        color: #fff;
         text-transform: uppercase;
         font-size: 1.25rem;
         font-weight: 500;
     }
+
     .total-row td {
         border: none;
-        padding-top: 30px;
+        padding-top: 20px;
         text-align: right;
+        font-size: 1.25rem;
+        font-weight: 600;
     }
+
     .terms {
-        max-width: 600px;
         margin-top: 30px;
     }
+
     .terms h1 {
         font-size: 1.5rem;
         font-weight: 600;
         text-transform: uppercase;
+        margin-bottom: 10px;
+        color: #333;
     }
+
     .terms p {
         font-size: 1rem;
         font-weight: normal;
-        margin-top: 10px;
+        margin: 0;
+        color: #777;
     }
 </style>
-
+</head>
 <body>
 
-<section class="py-20 overflow-hidden relative">
-    <div class="container mx-auto">
-        <div class="invoice-container">
-            <table>
-            <tr style="border-color: transparent">
-                <td style="border:none; text-align: left;"><img src="" alt=""></td>
-                <td style="border:none"></td>
-                <td style="border:none; text-align: right;"><h4>Facture # </h4></td>
-            </tr>
-            </table>
-            <div class="invoice-info">
-                <h1 class="project-name">MaBoutique.fr</h1>
+<div class="container">
+    <div class="invoice-header">
+        <img src="https://via.placeholder.com/150" alt="Logo CyberSec">
+        <h4>Facture CyberSec #123456</h4>
+    </div>
 
-                <div class="billing-address">
-                    <h4>Facture a :</h4>
-                    <p>{{ infoUser.lastName }}  {{ infoUser.firstName }}</p>
-                    <p>Street Avenue 10019 Miami, fl</p>
-                </div>
-            </div>
+    <div class="invoice-info">
+        <h1 class="project-name">CyberSec</h1>
 
-            <div class="overflow-x-auto">
-                <table style="margin-top: 30px">
-                    <thead>
-                    <tr>
-                        <th>Produit</th>
-                        <th>Prix</th>
-                        <th>Quantité</th>
-                        <th>Total</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr>
-                            <td class="p-5 text-lg font-medium border-b border-gray-800"> </td>
-                            <td class="p-5 text-lg font-medium border-b border-gray-800">  €</td>
-                            <td class="p-5 text-lg font-medium border-b border-gray-800 text-center"></td>
-                            <td class="p-5 text-lg font-medium border-b border-gray-800 text-end"> €</td>
-                        </tr>
-                    <tr class="total-row">
-                        <td colspan="4"><b>Total</b>  €</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="terms">
-                <h1>Termes et conditions:</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation uilamco laboris nisi ut aliquip ex ea luptatem.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation uilamco laboris nisi ut aliquip ex ea luptatem.</p>
-            </div>
+        <div class="billing-address">
+            <h4>Facture à :</h4>
+            <p>{{ infoUser.lastname }} {{ infoUser.firstname }}</p>
+            {% if infoUser.address is not null %}
+                <p>{{ infoUser.address.rue }}, {{ infoUser.address.codePostal }}, {{ infoUser.address.ville}}, {{ infoUser.address.pays }}</p>
+            {% else %}
+                <p>Adresse non disponible</p>
+            {% endif %}
         </div>
     </div>
-</section>
+    <table>
+        <thead>
+        <tr>
+            <th>Abonnement</th>
+            <th>Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ infoUser.subscriptionType }}</td>
+            <td>{{ infoUser.subscriptionPrice is not null ? infoUser.subscriptionPrice|number_format(2, '.', ',') ~ ' €' : 'N/A' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="terms">
+        <h1>Termes et conditions :</h1>
+        <p>Merci pour votre achat chez CyberSec. Pour toute question ou assistance, veuillez nous contacter.</p>
+    </div>
+</div>
 
 </body>
-
+</html>

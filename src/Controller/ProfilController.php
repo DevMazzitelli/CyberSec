@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Address;
+use App\Entity\Orders;
 use App\Form\AddressType;
 use App\Form\UserModificationType;
 use App\Repository\UserRepository;
@@ -18,13 +19,19 @@ class ProfilController extends AbstractController
 {
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/profil', name: 'app_profile')]
-    public function profile(UserRepository $userRepository): Response
+    public function profile(Security $security,
+                            UserRepository $userRepository,
+                            Request $request,
+                            EntityManagerInterface $entityManager,): Response
     {
-        $infoUser = $this->getUser();
+        $infoUser = $userRepository->find($security->getUser()->getId());
+        $ordersQuery = $entityManager->getRepository(Orders::class)->findBy(['users' => $infoUser], ['created_at' => 'DESC']);
+
 
         return $this->render('profil/index.html.twig', [
             'controller_name' => 'ProfilController',
             'infoUser' => $infoUser,
+            'order' => $ordersQuery,
         ]);
     }
 

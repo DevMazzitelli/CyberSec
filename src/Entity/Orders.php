@@ -72,4 +72,20 @@ class Orders
 
         return $this;
     }
+
+    // Méthode pour obtenir le prix en fonction de l'abonnement de l'utilisateur
+    public function getPrice(): float
+    {
+        $subscriptionType = $this->users->getIsSub();
+        switch ($subscriptionType) {
+            case 1: // Abonnement essentiel
+                return 6.99;
+            case 2: // Abonnement avancé
+                return 14.99;
+            case 3: // Abonnement prestige
+                return 29.99;
+            default:
+                return 0; // Par défaut, pas d'abonnement
+        }
+    }
 }

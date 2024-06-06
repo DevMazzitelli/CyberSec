@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Webhook;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bridge\Twig\Mime\NotificationEmail;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 
 class SubscribsController extends AbstractController
 {
@@ -177,7 +185,7 @@ class SubscribsController extends AbstractController
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/payment-success-abonnement-un', name: 'payment_success_abonnement_un')]
-    public function paymentSuccessAbonnementUn(Request $request)
+    public function paymentSuccessAbonnementUn(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         // Récupère notre utilisateur
         $user = $this->getUser();
@@ -185,17 +193,30 @@ class SubscribsController extends AbstractController
         // On va changer son abonnement de is_sub à true.
         $user->setIsSub(1);
 
-        // On met la date actuel + 30 jours à is_sub_time_end
+        // On met la date actuelle + 30 jours à is_sub_time_end
         $date = new \DateTime();
         $date->modify('+30 days');
         $user->setIsSubTimeEnd($date);
         $user->setIsSubTimeEnd2(null);
         $user->setIsSubTimeEnd3(null);
 
-        // Stocker l'ID de l'abonnement Stripe dans l'utilisateur
+        // Persist et flush l'utilisateur
+        $entityManager->persist($user);
+        $entityManager->flush();
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        // Envoie de l'email avec le pdf de la facture en cours.
+        $email = (new TemplatedEmail())
+            ->from('rayanasa77@gmail.com') // Remplacez par votre adresse e-mail
+            ->to($user->getEmail())
+            ->subject('Confirmation d\'abonnement')
+            ->htmlTemplate('emails/Confirmation_Abonnement/confirmation_abonnement.html.twig')
+            ->context([
+                'user' => $user,
+                'startDate' => new \DateTime(),
+                'endDate' => $date,
+            ]);
+
+        $mailer->send($email);
 
         return $this->render('subscribs/success.html.twig');
     }
@@ -256,7 +277,7 @@ class SubscribsController extends AbstractController
 
     #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/unsubscribe', name: 'app_unsubscribe')]
-    public function unsubscribe(): Response
+    public function unsubscribe(MailerInterface $mailer): Response
     {
         // Récupère notre utilisateur
         $user = $this->getUser();
@@ -274,6 +295,18 @@ class SubscribsController extends AbstractController
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        // Envoi de l'e-mail de confirmation
+        $email = (new TemplatedEmail())
+            ->from('rayanasa77@gmail.com') // Remplacez par votre adresse e-mail
+            ->to($user->getEmail())
+            ->subject('Confirmation de désabonnement')
+            ->htmlTemplate('emails/unsubscribe/unsubscribe_confirmation.html.twig')
+            ->context([
+                'user' => $user,
+            ]);
+
+        $mailer->send($email);
 
         // Redirige vers une page de succès
         return $this->redirectToRoute('app_profile');

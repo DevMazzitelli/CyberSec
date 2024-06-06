@@ -90,7 +90,7 @@ class CoursController extends AbstractController
     }
 
     //cours/Facile/ordinateur_composants/index.html.twig
-    #[Route('/ordinateur&composants/1', name: 'app_cours_1_ordinateur_composants')]
+    #[Route('/ordinateur&composants', name: 'app_cours_1_ordinateur_composants')]
     public function index(): Response
     {
         $user = $this->security->getUser();
