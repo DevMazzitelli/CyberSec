@@ -40,4 +40,17 @@ class EmailService
 
         $this->mailer->send($email);
     }
+
+    public function sendEmailAfterSub($userEmail, $pdfContent)
+    {
+        $email = (new Email())
+            ->from('cybersec@gmail.com')
+            ->to($userEmail)
+            ->subject('Votre facture d\'abonnement')
+            ->text('Veuillez trouver ci-joint votre facture d\'abonnement.')
+            ->html('<p>Veuillez trouver ci-joint votre facture d\'abonnement.</p>')
+            ->attach($pdfContent, 'facture.pdf', 'application/pdf');
+
+        $this->mailer->send($email);
+    }
 }

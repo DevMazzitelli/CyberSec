@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Address;
 use App\Repository\OrdersRepository;
 use App\Repository\UserRepository;
+use App\Service\EmailService;
 use App\Service\FactureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Webhook;
@@ -192,7 +193,8 @@ class SubscribsController extends AbstractController
         MailerInterface $mailer,
         UserRepository $userRepository,
         OrdersRepository $ordersRepository,
-        FactureService $factureService
+        FactureService $factureService,
+        EmailService $emailService
     ): Response
     {
         // Récupère notre utilisateur
@@ -221,17 +223,7 @@ class SubscribsController extends AbstractController
         // Génération du PDF
         $pdfContent = $factureService->generatePdf($user, $order, $address, $this->getParameter('kernel.project_dir'));
 
-        // Création de l'e-mail
-        $email = (new Email())
-            ->from('cybersec@gmail.com')
-            ->to($user->getEmail())
-            ->subject('Votre facture d\'abonnement')
-            ->text('Veuillez trouver ci-joint votre facture d\'abonnement.')
-            ->html('<p>Veuillez trouver ci-joint votre facture d\'abonnement.</p>')
-            ->attach($pdfContent, 'facture.pdf', 'application/pdf');
-
-        // Envoi de l'e-mail
-        $mailer->send($email);
+        $emailService->sendEmailAfterSub($user->getEmail(), $pdfContent);
 
         return $this->render('subscribs/success.html.twig');
     }
