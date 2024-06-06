@@ -25,7 +25,7 @@ class ProfilController extends AbstractController
                             EntityManagerInterface $entityManager,): Response
     {
         $infoUser = $userRepository->find($security->getUser()->getId());
-        $ordersQuery = $entityManager->getRepository(Orders::class)->findBy(['users' => $infoUser], ['created_at' => 'DESC']);
+        $ordersQuery = $entityManager->getRepository(Orders::class)->findBy(['user' => $infoUser], ['created_at' => 'DESC']);
 
 
         return $this->render('profil/index.html.twig', [

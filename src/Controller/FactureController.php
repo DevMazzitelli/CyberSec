@@ -30,6 +30,12 @@ class FactureController extends AbstractController
         // Récupération de l'adresse lié à l'utilisateur
         $address = $infoUser->getAddress();
 
-        return $factureService->generatePdf($infoUser, $order, $address, $this->getParameter('kernel.project_dir'));
+        $pdf = $factureService->generatePdf($infoUser, $order, $address, $this->getParameter('kernel.project_dir'));
+
+        $response = new Response($pdf);
+
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
     }
 }
