@@ -346,36 +346,44 @@ class SubscribsController extends AbstractController
     #[Route('/webhook/payment/succeeded', name: 'webhook_success', methods: ['POST'])]
     public function handleWebhook(Request $request): Response
     {
-        $payload = json_decode($request->getContent(), true);
+        try {
+            $payload = json_decode($request->getContent(), true);
 
-        // Add this line to debug the payload
-        error_log(print_r($payload, true));
+            // Add this line to debug the payload
+            error_log(print_r($payload, true));
 
-        if ($payload['type'] === 'checkout.session.completed') {
-            $session = $payload['data']['object'];
+            if ($payload['type'] === 'checkout.session.completed') {
+                $session = $payload['data']['object'];
 
-            // Add this line to debug the session
-            error_log(print_r($session, true));
+                // Add this line to debug the session
+                error_log(print_r($session, true));
 
-            // Récupérer l'ID de l'utilisateur à partir des métadonnées de la session de paiement
-            $userId = $session['metadata']['user_id'];
+                // Récupérer l'ID de l'utilisateur à partir des métadonnées de la session de paiement
+                $userId = $session['metadata']['user_id'];
 
-            // Récupérer l'utilisateur à partir de l'ID
-            $user = $this->entityManager->getRepository(User::class)->find($userId);
+                // Récupérer l'utilisateur à partir de l'ID
+                $user = $this->entityManager->getRepository(User::class)->find($userId);
 
-            // Add this line to debug the user
-            error_log(print_r($user, true));
+                // Add this line to debug the user
+                error_log(print_r($user, true));
 
-            // Récupérer l'ID de l'abonnement à partir de la session
-            $stripeSubscriptionId = $session['subscription'];
+                // Récupérer l'ID de l'abonnement à partir de la session
+                $stripeSubscriptionId = $session['subscription'];
 
-            // Mettre à jour l'abonnement de l'utilisateur dans votre base de données
-            $user->setIsSub(1);
-            $user->setStripeSubscriptionId($stripeSubscriptionId);
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+                // Mettre à jour l'abonnement de l'utilisateur dans votre base de données
+                $user->setIsSub(1);
+                $user->setStripeSubscriptionId($stripeSubscriptionId);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+            }
+
+            return new Response('Received event', 200);
+        } catch (\Exception $e) {
+            // Log the exception message
+            error_log($e->getMessage());
+
+            // Return a 500 status code
+            return new Response('Server error', 500);
         }
-
-        return new Response('Received event', 200);
     }
 }

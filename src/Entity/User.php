@@ -5,11 +5,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -59,10 +61,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $is_sub_time_end_3 = null;
 
-    #[ORM\OneToOne(targetEntity: Address::class, cascade: ["persist", "remove"])]
+    #[ORM\OneToOne(targetEntity: Address::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private $address;
 
-    // Prix des abonnements
+    public function __construct()
+    {
+        $this->address = null; // Initialize as null
+    }
+
+        // Prix des abonnements
     const SUBSCRIPTION_PRICES = [
         1 => 6.99,   // Essentiel: 6.99€
         2 => 14.99,   // Avancé: 14.99€
@@ -204,7 +211,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->StripeSubscriptionId;
     }
 
-    public function setStripeSubscriptionId(?string $StripeSubscriptionId): static
+    public function setStripeSubscriptionId(?string $StripeSubscriptionId): self
     {
         $this->StripeSubscriptionId = $StripeSubscriptionId;
 
